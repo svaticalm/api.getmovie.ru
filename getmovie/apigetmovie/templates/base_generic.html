@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     {% block title %}<title></title>{% endblock %}
+    {% load sass_tags %}
+    <link href="{% sass_src 'styles/sass/main.sass' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
     {% block sidebar %}<!-- insert default nav text for very page -->{% endblock %}
