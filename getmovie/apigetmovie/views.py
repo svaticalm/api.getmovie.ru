@@ -6,10 +6,22 @@ from django.urls import reverse
 from .forms import RegistrationUsersForm, LoginFormUser
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, get_user
+from apigetmovie.api import request_api
 
 
 def index(request):
-    return render(request, 'index.html')
+    res = request_api.get_response_json(language_list=["ru",])
+
+    if res is False:
+        return render(request,
+               'index.html',
+               context={'error_api': 'Извините, но произошла неизвестная ошибка. Попробуйте еще раз'})
+
+    movie_descriptions = request_api.get_movie(res)
+    movie_descriptions.update({"error_api": ""})
+    return render(request,
+                  'index.html',
+                  context=movie_descriptions)
 
 
 def auth_users(request):
