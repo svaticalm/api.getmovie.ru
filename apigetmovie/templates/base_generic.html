@@ -7,6 +7,7 @@
     <link href="{% sass_src 'styles/sass/main.sass' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
+    {% include "header.html" %}
     {% block sidebar %}<!-- insert default nav text for very page -->{% endblock %}
     {% block content %}<!-- default content text (typically empty) -->{% endblock %}
 </body>

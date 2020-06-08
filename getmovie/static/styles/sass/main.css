@@ -1,5 +1,46 @@
-h1 {
-  font-size: 60px;
-  color: red; }
+@font-face {
+  font-family: 'ms';
+  src: url("../../fonts/ms-regular/ms-regular.eot");
+  src: url("../../fonts/ms-regular/ms-regular.eot?#iefix") format("embedded-opentype"), url("../../fonts/ms-regular/ms-regular.woff") format("woff"), url("../../fonts/ms-regular/ms-regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'ms';
+  src: url("../../fonts/ms-bold/ms-bold.eot");
+  src: url("../../fonts/ms-bold/ms-bold.eot?#iefix") format("embedded-opentype"), url("../../fonts/ms-bold/ms-bold.woff") format("woff"), url("../../fonts/ms-bold/ms-bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'ms';
+  src: url("../../fonts/ms-light/ms-light.eot");
+  src: url("../../fonts/ms-light/ms-light.eot?#iefix") format("embedded-opentype"), url("../../fonts/ms-light/ms-light.woff") format("woff"), url("../../fonts/ms-light/ms-light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal; }
+
+* {
+  box-sizing: border-box;
+  -webkit-appearance: none; }
+
+body, html {
+  margin: 0;
+  width: 100%;
+  height: 100%; }
+
+body {
+  background-color: #1B1A28;
+  color: #fff;
+  font-family: "ms", sans-serif;
+  line-height: 1.25;
+  font-weight: 14px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  min-width: 1060px; }
+
+header {
+  width: 100%;
+  height: 94px;
+  padding-left: 35px; }
 
 /*# sourceMappingURL=main.css.map */
