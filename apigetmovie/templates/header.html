@@ -1,3 +1,38 @@
-<header>
-    123
+{% load static %}
+<header class="header">
+    <div class="h__left">
+        <div class="h__menu">
+            <svg class="menu" id="open-menu">
+                <use xlink:href="{% static 'img/sprite.svg' %}#menu"></use>
+            </svg>
+            <svg class="close" id="close-menu">
+                <use xlink:href="{% static 'img/sprite.svg' %}#close"></use>
+            </svg>
+        </div>
+        <div class="h__search">
+            <svg>
+                <use xlink:href="{% static 'img/sprite.svg' %}#search"></use>
+            </svg>
+        </div>
+        <div class="h__logo">
+            <span class="get">get</span><span class="mov">movie</span>
+        </div>
+    </div>
+    <div class="h__right">
+        <div class="h__update">
+            <svg>
+                <use xlink:href="{% static 'img/sprite.svg' %}#update"></use>
+            </svg>
+        </div>
+    </div>
 </header>
+<script type="text/javascript">
+    document.getElementById('open-menu').onclick = function(){
+        document.querySelector('.wrapper').classList.add('opened-menu');
+        document.querySelector('.main-menu').classList.add('opened-menu');
+    }
+    document.getElementById('close-menu').onclick = function(){
+        document.querySelector('.wrapper').classList.remove('opened-menu');
+        document.querySelector('.main-menu').classList.remove('opened-menu');
+    }
+</script>
