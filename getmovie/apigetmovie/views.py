@@ -19,6 +19,7 @@ def index(request):
 
     movie_descriptions = request_api.get_movie(res)
     movie_descriptions.update({"error_api": ""})
+
     return render(request,
                   'index.html',
                   context=movie_descriptions)

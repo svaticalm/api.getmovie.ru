@@ -1,0 +1,5 @@
+.sqlite3
+getmovie/apigetmovie/migrations/
+getmovie/apigetmovie/__pycache__/
+getmovie/getmovie/__pycache__/
+/apikey.txt

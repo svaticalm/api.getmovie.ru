@@ -10,5 +10,19 @@
         {% else %} <a href="/login">Войти</a> <a href="/auth">Зарегистрироваться</a>
         {% endif %}
     </p>
+    <div>
+        {% if error_api %}
+        <p>{{ error_api }}</p>
+        {% else %}
+            <p>{{ title }}</p>
+            <p>{{ overview }}</p>
+            <p>{{ genre_ids }}</p>
+            <p>{{  vote_average }}</p>
+            <p>{{ adult }}</p>
+        {% endif %}
+    </div>
+    <form method="getя я" action="">
+        <input type="submit" value="ранд" >
+    </form>
 </div>
 {% endblock %}
