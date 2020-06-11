@@ -28,7 +28,11 @@ body,html
     margin: 0
     width: 100%
     height: 100%
-
+#header,#get-film
+    transition: all 1s ease
+.scale07
+    transform: scale(0.7)
+    pointer-events: none
 body
     background-color: #fff
     color: #fff
@@ -40,6 +44,7 @@ body
     justify-content: flex-end
     box-sizing: border-box
     min-width: 1060px
+
 .btn
     border: none
     outline: none
@@ -50,6 +55,9 @@ body
     width: fit-content
     cursor: pointer
     transition: all .15s ease
+    &:active
+        .text
+            background: linear-gradient(131.97deg, #4F37C5 35.87%, #662BE3 66.42%)
     &:hover
         box-shadow: 0px 0px 12px rgba(69, 46, 180, 0.30)
         .icon
@@ -79,8 +87,10 @@ body
         font-size: 17px
 .wrapper
     background-color: $default-color
-    width: 100vw
+    width: 100%
     transition: all .15s ease
+    overflow: hidden
+    overflow-y: scroll
     &.opened-menu
         border-top-left-radius: 35px
         border-bottom-left-radius: 35px
@@ -97,10 +107,13 @@ body
                     pointer-events: all
 .content
     width: 100%
-    height: calc(100vh - 180px)
+    height: calc(100vh - 100px)
     display: flex
     justify-content: center
     align-items: center
+    &-generated-film
+        display: block
+        height: 100%
 .main-menu
     width: 0
     height: 100vh
@@ -117,17 +130,22 @@ header.header
     justify-content: space-between
     align-items: center
     padding-right: 16px
+    background-color: #1B1A28
+    position: relative
+    z-index: 100
     .h
         &__update
             width: 60px
             height: 60px
             border-radius: 80px
-            display: flex
             background: linear-gradient(142.16deg, #352388 30.61%, #3A2B80 95.25%)
             align-items: center
             justify-content: center
             cursor: pointer
             transition: all .15s ease
+            display: none
+            &--show
+                display: flex
             &:hover
                 box-shadow: 0px 0px 15px rgba(53, 35, 136, 0.30)
                 svg
@@ -142,11 +160,6 @@ header.header
             line-height: 42px
             margin-top: -7px
             cursor: pointer
-            .mov
-                transition: all .15s ease
-            &:hover
-                .mov
-                    color: #FF295D
         &__left
             display: flex
             align-items: center
@@ -190,3 +203,44 @@ header.header
             svg
                 width: 18px
                 height: 18px
+.generated-film
+    background-color: $default-color
+    display: none
+    opacity: 0
+    transition: all 0.5s ease
+    &__video
+        height: 500px
+        iframe
+            width: 100%
+            height: 100%
+    &__info
+        display: flex
+        position: relative
+        z-index: 100
+        padding-left: 70px
+        padding-right: 120px
+        max-width: 1500px
+        margin: 0 auto
+        top: 0
+        &--img
+            width: 350px
+            margin-right: 40px
+            img
+                width: 100%
+                height: auto
+                margin-top: -75%
+                border-radius: 9px
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15)
+        &--detail
+            padding-top: 40px
+            width: 600px
+            .genre
+                color: #424367
+                font-size: 14px
+                line-height: 17px
+                margin-bottom: 8px
+            .title
+                font-size: 48px
+                font-weight: 900
+                line-height: 55px
+                color: #fff

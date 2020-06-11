@@ -25,10 +25,8 @@ def index(request):
 
             movie_descriptions = request_api.get_movie(res)
             movie_descriptions.update({"error_api": ""})
-
             return HttpResponse(dumps(movie_descriptions))
     return render(request, 'index.html')
-
 
 def auth_users(request):
 
