@@ -33,7 +33,7 @@ def get_response_json(language_list, **kwargs):
 
 def get_movie(res):
     max_len = len(res)
-    num = randint(1, max_len)
+    num = randint(0, max_len-1)
     film = res[num]
     movie_descriptions = film
 

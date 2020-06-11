@@ -1,0 +1,192 @@
+@import "fonts"
+
+$default-color: #1B1A28
+$violet: #352388
+$violet-light: #452EB4
+
+*
+    box-sizing: border-box
+    -webkit-appearance: none
+/* Reset `button` and button-style `input` default styles */
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button
+    background: none
+    border: 0
+    color: inherit
+    font: inherit
+    line-height: normal
+    overflow: visible
+    padding: 0
+    -webkit-appearance: button
+    -webkit-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+
+body,html
+    margin: 0
+    width: 100%
+    height: 100%
+
+body
+    background-color: #fff
+    color: #fff
+    font-family: "ms", sans-serif
+    line-height: 1.25
+    font-weight: 14px
+    min-height: 100vh
+    display: flex
+    justify-content: flex-end
+    box-sizing: border-box
+    min-width: 1060px
+.btn
+    border: none
+    outline: none
+    display: flex
+    border-radius: 8px
+    overflow: hidden
+    -webkit-appearance: none
+    width: fit-content
+    cursor: pointer
+    transition: all .15s ease
+    &:hover
+        box-shadow: 0px 0px 12px rgba(69, 46, 180, 0.30)
+        .icon
+            svg
+                transform: rotate(180deg)
+    .icon
+        height: 60px
+        width: 60px
+        display: flex
+        justify-content: center
+        background: linear-gradient(142.16deg, #352388 30.61%, #3A2B80 95.25%)
+        align-items: center
+        svg
+            width: 20px
+            transition: all .15s ease
+            height: 20px
+    .text
+        display: flex
+        justify-content: center
+        align-items: center
+        padding-left: 28px
+        color: #fff
+        padding-right: 28px
+        background: linear-gradient(131.97deg, #5238CF 35.87%, #712EFF 66.42%)
+        height: 60px
+        font-weight: bold
+        font-size: 17px
+.wrapper
+    background-color: $default-color
+    width: 100vw
+    transition: all .15s ease
+    &.opened-menu
+        border-top-left-radius: 35px
+        border-bottom-left-radius: 35px
+        width: calc(100% - 450px)
+        header.header
+            .h__menu
+                height: 20px
+                width: 20px
+                .menu
+                    opacity: 0
+                    pointer-events: none
+                .close
+                    opacity: 1
+                    pointer-events: all
+.content
+    width: 100%
+    height: calc(100vh - 180px)
+    display: flex
+    justify-content: center
+    align-items: center
+.main-menu
+    width: 0
+    height: 100vh
+    background-color: #fff
+    transition: all .35s ease
+    overflow: hidden
+    &.opened-menu
+        width: 450px
+header.header
+    width: 100%
+    height: 90px
+    padding-left: 35px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding-right: 16px
+    .h
+        &__update
+            width: 60px
+            height: 60px
+            border-radius: 80px
+            display: flex
+            background: linear-gradient(142.16deg, #352388 30.61%, #3A2B80 95.25%)
+            align-items: center
+            justify-content: center
+            cursor: pointer
+            transition: all .15s ease
+            &:hover
+                box-shadow: 0px 0px 15px rgba(53, 35, 136, 0.30)
+                svg
+                    transform: rotate(180deg)
+            svg
+                width: 20px
+                transition: all .15s ease
+                height: 20px
+        &__logo
+            font-weight: bold
+            font-size: 36px
+            line-height: 42px
+            margin-top: -7px
+            cursor: pointer
+            .mov
+                transition: all .15s ease
+            &:hover
+                .mov
+                    color: #FF295D
+        &__left
+            display: flex
+            align-items: center
+        &__menu
+            margin-right: 40px
+            height: 24px
+            cursor: pointer
+            opacity: 0.75
+            transition: all .15s ease
+            position: relative
+            width: 24px
+            &:hover
+                opacity: 1
+            .menu
+                position: absolute
+                left: 0
+                top: 0
+                pointer-events: all
+                opacity: 1
+                transition: all .15s ease
+            .close
+                position: absolute
+                left: 0
+                top: 0
+                pointer-events: none
+                opacity: 0
+                transition: all .15s ease
+                width: 20px
+                height: 20px
+            svg
+                width: 24px
+                height: 24px
+        &__search
+            margin-right: 40px
+            height: 18px
+            cursor: pointer
+            opacity: 0.75
+            transition: all .15s ease
+            &:hover
+                opacity: 1
+            svg
+                width: 18px
+                height: 18px

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.template.response import HttpResponse
 from django.views import generic
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
@@ -7,22 +8,26 @@ from .forms import RegistrationUsersForm, LoginFormUser
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, get_user
 from apigetmovie.api import request_api
+from django.http import QueryDict
+from json import dumps
 
 
 def index(request):
-    res = request_api.get_response_json(language_list=["ru",])
+    if request.method == 'POST':
 
-    if res is False:
-        return render(request,
-               'index.html',
-               context={'error_api': 'Извините, но произошла неизвестная ошибка. Попробуйте еще раз'})
+        response_ajax = request.read().decode("UTF-8")
+        type = QueryDict(response_ajax).get('type')
 
-    movie_descriptions = request_api.get_movie(res)
-    movie_descriptions.update({"error_api": ""})
+        if type == 'movie':
+            res = request_api.get_response_json(language_list=["ru",])
+            if res is False:
+                return HttpResponse(dumps({'error_api': 'Извините, но произошла неизвестная ошибка. Попробуйте еще раз'}))
 
-    return render(request,
-                  'index.html',
-                  context=movie_descriptions)
+            movie_descriptions = request_api.get_movie(res)
+            movie_descriptions.update({"error_api": ""})
+
+            return HttpResponse(dumps(movie_descriptions))
+    return render(request, 'index.html')
 
 
 def auth_users(request):
