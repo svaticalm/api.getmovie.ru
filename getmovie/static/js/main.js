@@ -58,6 +58,8 @@ $(function() {
 	}
 
 	function showFilm(data){
+		film.img.attr('src', 'https://image.tmdb.org/t/p/w500/' + data.poster_path);
+		film.title.html(data.title);
 		setTimeout(function(){
 			$('.h__update').addClass('h__update--show');
 			$('.content').addClass('content-generated-film');
@@ -65,9 +67,6 @@ $(function() {
 			$('#generated-film').show();
 			$('#generated-film, #header').animate({opacity: '1'}, 500);
 			$('#generated-film, #header').removeClass('scale07');
-
-			film.img.attr('src', 'https://image.tmdb.org/t/p/w500/' + data.poster_path);
-			film.title.html(data.title);
 		}, 500);
 	}
 	function hideFilm(){
