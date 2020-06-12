@@ -10,10 +10,12 @@ $(function() {
 		voteCount: $('.generated-film__info--detail .ratings .votes .bot'),
 		voteAverage: $('.generated-film__info--detail .ratings .votes .top'),
 		popularity: $('.generated-film__info--detail .ratings .rating .top'),
+		backdrop: $('.generated-film__backdrop'),
 
 
 		show: function(data){
 			film.img.attr('src', 'https://image.tmdb.org/t/p/w500/' + data.poster_path);
+			film.backdrop.css({'background-image':  'url(https://image.tmdb.org/t/p/original/' + data.backdrop_path + ')'});
 			film.title.html(data.title);
 			film.releaseDate.html(data.release_date.split('-')[0]);
 			film.overview.html(data.overview);

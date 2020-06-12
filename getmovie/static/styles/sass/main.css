@@ -275,6 +275,11 @@ body {
     margin: 0 auto;
     margin-top: 32px;
     margin-bottom: 16px; }
+  .generated-film__backdrop {
+    height: 500px;
+    width: 100%;
+    background-size: cover;
+    background-position: center; }
   .generated-film__video {
     height: 500px; }
     .generated-film__video iframe {
