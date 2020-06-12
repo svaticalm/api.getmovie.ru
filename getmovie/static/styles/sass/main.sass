@@ -238,11 +238,30 @@ body
     display: none
     opacity: 0
     transition: all 0.5s ease
+    .block-ttl
+        color: #424367
+        font-size: 14px
+        line-height: 17px
+        margin-bottom: 8px
+        text-transform: capitalize
+        padding-left: 460px
+        max-width: 1500px
+        margin: 0 auto
+        margin-top: 32px
+        margin-bottom: 16px
     &__video
         height: 500px
         iframe
             width: 100%
             height: 100%
+    &__overview
+        padding-left: 460px
+        padding-right: 120px
+        max-width: 1500px
+        margin: 0 auto
+        font-size: 18px
+        line-height: 28px
+        padding-bottom: 32px
     &__info
         display: flex
         position: relative
@@ -252,6 +271,36 @@ body
         max-width: 1500px
         margin: 0 auto
         top: 0
+        .ratings
+            display: flex
+            margin-top: 16px
+            &__item
+                display: flex
+                align-items: center
+                height: 50px
+                padding: 8px 13px
+                background-color: #282947
+                border-radius: 15px
+                color: #7D73B8
+                margin-right: 16px
+                svg
+                    margin-right: 10px
+                .txt
+                    .top
+                        font-size: 18px
+                        line-height: 22px
+                        font-weight: bold
+                    .bot
+                        font-size: 10px
+                        line-height: 12px
+                &.votes
+                    svg
+                        width: 17px
+                        fill: #FF3743
+                &.rating
+                    svg
+                        width: 17px
+                        fill: #ffc107
         &--img
             width: 350px
             margin-right: 40px
@@ -269,6 +318,20 @@ body
                 font-size: 14px
                 line-height: 17px
                 margin-bottom: 8px
+                text-transform: capitalize
+            .runtime
+                color: #7D73B8
+                font-weight: bold
+                font-weight: 14px
+                line-height: 17px
+                margin-top: 32px
+                svg
+                    width: 12px
+                    height: 12px
+                    margin-right: 4px
+                    fill: #fff
+                .time
+                    margin-right: 16px
             .title
                 font-size: 48px
                 font-weight: 900

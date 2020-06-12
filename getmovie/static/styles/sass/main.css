@@ -264,11 +264,30 @@ body {
   display: none;
   opacity: 0;
   transition: all 0.5s ease; }
+  .generated-film .block-ttl {
+    color: #424367;
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 8px;
+    text-transform: capitalize;
+    padding-left: 460px;
+    max-width: 1500px;
+    margin: 0 auto;
+    margin-top: 32px;
+    margin-bottom: 16px; }
   .generated-film__video {
     height: 500px; }
     .generated-film__video iframe {
       width: 100%;
       height: 100%; }
+  .generated-film__overview {
+    padding-left: 460px;
+    padding-right: 120px;
+    max-width: 1500px;
+    margin: 0 auto;
+    font-size: 18px;
+    line-height: 28px;
+    padding-bottom: 32px; }
   .generated-film__info {
     display: flex;
     position: relative;
@@ -278,6 +297,33 @@ body {
     max-width: 1500px;
     margin: 0 auto;
     top: 0; }
+    .generated-film__info .ratings {
+      display: flex;
+      margin-top: 16px; }
+      .generated-film__info .ratings__item {
+        display: flex;
+        align-items: center;
+        height: 50px;
+        padding: 8px 13px;
+        background-color: #282947;
+        border-radius: 15px;
+        color: #7D73B8;
+        margin-right: 16px; }
+        .generated-film__info .ratings__item svg {
+          margin-right: 10px; }
+        .generated-film__info .ratings__item .txt .top {
+          font-size: 18px;
+          line-height: 22px;
+          font-weight: bold; }
+        .generated-film__info .ratings__item .txt .bot {
+          font-size: 10px;
+          line-height: 12px; }
+        .generated-film__info .ratings__item.votes svg {
+          width: 17px;
+          fill: #FF3743; }
+        .generated-film__info .ratings__item.rating svg {
+          width: 17px;
+          fill: #ffc107; }
     .generated-film__info--img {
       width: 350px;
       margin-right: 40px; }
@@ -294,7 +340,21 @@ body {
         color: #424367;
         font-size: 14px;
         line-height: 17px;
-        margin-bottom: 8px; }
+        margin-bottom: 8px;
+        text-transform: capitalize; }
+      .generated-film__info--detail .runtime {
+        color: #7D73B8;
+        font-weight: bold;
+        font-weight: 14px;
+        line-height: 17px;
+        margin-top: 32px; }
+        .generated-film__info--detail .runtime svg {
+          width: 12px;
+          height: 12px;
+          margin-right: 4px;
+          fill: #fff; }
+        .generated-film__info--detail .runtime .time {
+          margin-right: 16px; }
       .generated-film__info--detail .title {
         font-size: 48px;
         font-weight: 900;

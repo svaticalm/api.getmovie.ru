@@ -33,7 +33,38 @@
                 </div>
                 <div class="title">
                 </div>
+                <div class="runtime">
+                    <svg>
+                        <use xlink:href="{% static 'img/sprite.svg' %}#clock"></use>
+                    </svg>
+                    <span class="time"></span>
+                    <span class="countries"></span>, <span class="release-date"></span> г.
+                </div>
+                <div class="ratings">
+                    <div class="votes ratings__item">
+                        <svg>
+                            <use xlink:href="{% static 'img/sprite.svg' %}#fav"></use>
+                        </svg>
+                        <div class="txt">
+                            <div class="top">85%</div>
+                            <div class="bot">29,412</div>
+                        </div>
+                    </div>
+                    <div class="rating ratings__item">
+                        <svg>
+                            <use xlink:href="{% static 'img/sprite.svg' %}#star"></use>
+                        </svg>
+                        <div class="txt">
+                            <div class="top">7.9</div>
+                            <div class="bot">Популярность</div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="block-ttl">Описание</div>
+        <div class="generated-film__overview">
+
         </div>
     </div>
     <p style="display: none">

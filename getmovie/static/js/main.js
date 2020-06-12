@@ -2,12 +2,41 @@ $(function() {
 	let film = {
 		img: $('.generated-film__info--img img'),
 		title: $('.generated-film__info--detail .title'),
+		overview: $('.generated-film__overview'),
 		genre: $('.generated-film__info--detail .genre'),
+		runtime: $('.generated-film__info--detail .runtime .time'),
+		countries: $('.generated-film__info--detail .runtime .countries'),
+		releaseDate: $('.generated-film__info--detail .runtime .release-date'),
+		voteCount: $('.generated-film__info--detail .ratings .votes .bot'),
+		voteAverage: $('.generated-film__info--detail .ratings .votes .top'),
+		popularity: $('.generated-film__info--detail .ratings .rating .top'),
 
 
 		show: function(data){
 			film.img.attr('src', 'https://image.tmdb.org/t/p/w500/' + data.poster_path);
 			film.title.html(data.title);
+			film.releaseDate.html(data.release_date.split('-')[0]);
+			film.overview.html(data.overview);
+			film.voteCount.html(data.vote_count + ' голосов');
+			film.voteAverage.html(data.vote_average * 10 + '%');
+			film.popularity.html(data.popularity);
+
+			let runtime = Math.floor(data.runtime / 60) + 'h ' + data.runtime % 60 + 'm';
+			film.runtime.html(runtime);
+
+			let genres = '';
+			for(let i = 0; i < data.genres.length; i++){
+				genres += data.genres.length == 1 || i == data.genres.length-1 ? data.genres[i].name : data.genres[i].name + ', '
+			}
+			film.genre.html(genres);
+
+
+			let countries = '';
+			for(let i = 0; i < data.production_countries.length; i++){
+				countries += data.production_countries.length == 1 || i == data.production_countries.length-1 ? data.production_countries[i].iso_3166_1 : data.production_countries[i].iso_3166_1 + ', '
+			}
+			film.countries.html(countries);
+
 
 			setTimeout(function(){
 				$('.h__update').addClass('h__update--show');
