@@ -66,6 +66,29 @@ body
     min-width: 1060px
     overflow: hidden
     overflow-y: scroll
+    &.--generated-film
+        .content
+            display: block
+            height: calc(100% - 90px)
+    &.opened-menu
+        header.header
+            border-top-left-radius: 35px
+        .main-menu
+            width: 450px
+        .wrapper
+            border-top-left-radius: 35px
+            border-bottom-left-radius: 35px
+            width: calc(100% - 450px)
+            header.header
+                .h__menu
+                    height: 20px
+                    width: 20px
+                    .menu
+                        opacity: 0
+                        pointer-events: none
+                    .close
+                        opacity: 1
+                        pointer-events: all
 .btn
     border: none
     outline: none
@@ -111,48 +134,35 @@ body
     width: 100%
     transition: all .15s ease
     min-height: 100vh
-    &.opened-menu
-        border-top-left-radius: 35px
-        border-bottom-left-radius: 35px
-        width: calc(100% - 450px)
-        header.header
-            .h__menu
-                height: 20px
-                width: 20px
-                .menu
-                    opacity: 0
-                    pointer-events: none
-                .close
-                    opacity: 1
-                    pointer-events: all
 .content
     width: 100%
     height: calc(100vh - 100px)
     display: flex
     justify-content: center
     align-items: center
-    &-generated-film
-        display: block
-        height: calc(100% - 90px)
 .main-menu
     width: 0
     height: 100vh
     background-color: #fff
     transition: all .35s ease
     overflow: hidden
-    &.opened-menu
-        width: 450px
-header.header
+.header
     width: 100%
     height: 90px
     padding-left: 35px
-    display: flex
-    justify-content: space-between
-    align-items: center
     padding-right: 16px
     background-color: #1B1A28
     position: relative
     z-index: 100
+    display: flex
+    align-items: center
+    &__inner
+        display: flex
+        justify-content: space-between
+        align-items: center
+        max-width: 1500px
+        margin: 0 auto
+        width: 100%
     .h
         &__update
             width: 60px
