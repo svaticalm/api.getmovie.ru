@@ -7,26 +7,27 @@ from django.urls import reverse
 from .forms import RegistrationUsersForm, LoginFormUser
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, get_user
-from apigetmovie.api import request_api
+from apigetmovie.api.request_api import RandomFilm
 from django.http import QueryDict
 from json import dumps
 
 
 def index(request):
     if request.method == 'POST':
-
         response_ajax = request.read().decode("UTF-8")
-        type = QueryDict(response_ajax).get('type')
+        type_ = QueryDict(response_ajax).get('type')
+        film = RandomFilm(type_)
+        res = film.get_film()
 
-        if type == 'movie':
-            res = request_api.get_response_json(language_list=["ru",])
-            if res is False:
-                return HttpResponse(dumps({'error_api': 'Извините, но произошла неизвестная ошибка. Попробуйте еще раз'}))
+        if res is False:
+            return HttpResponse(dumps({'error_api': 'Извините, но произошла неизвестная ошибка. Попробуйте еще раз'}))
 
-            movie_descriptions = request_api.get_movie(res)
-            movie_descriptions.update({"error_api": ""})
-            return HttpResponse(dumps(movie_descriptions))
+        res.update({"error_api": ""})
+        print(res)
+        return HttpResponse(dumps(res))
+
     return render(request, 'index.html')
+
 
 def auth_users(request):
 
