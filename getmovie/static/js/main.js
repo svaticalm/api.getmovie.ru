@@ -1,4 +1,7 @@
 $(function() {
+ 	let currentUrl = window.location.href;
+	if(currentUrl.indexOf('/movie/') != -1)
+	  alert('Part of URL exist');
 	let film = {
 		img: $('.generated-film__info--img img'),
 		title: $('.generated-film__info--detail .title'),
@@ -71,6 +74,7 @@ $(function() {
 			    dataType: 'json',
 			    success: function (data) {
 				  setTimeout(function(){
+					  window.history.pushState("", "Новый фильм", "/movie/" + data.id);
 					  film.show(data);
 				  }, 600);
 			      console.log(data);
@@ -116,7 +120,6 @@ $(function() {
 	// AJAX ЗАПРОС на рандомный фильм без фильтров
 	$('#get-film').on("submit", function(){
 		event.preventDefault();
-	    // window.history.pushState("object or string", "Новый фильм", "/new-film");
 		film.generate();
 	});
 

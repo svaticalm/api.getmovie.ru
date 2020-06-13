@@ -193,7 +193,7 @@ body {
     width: 60px;
     height: 60px;
     border-radius: 80px;
-    background: linear-gradient(142.16deg, #352388 30.61%, #3A2B80 95.25%);
+    background: linear-gradient(131.97deg, #5238CF 35.87%, #712EFF 66.42%);
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -202,7 +202,7 @@ body {
     .header .h__update--show {
       display: flex; }
     .header .h__update:hover {
-      box-shadow: 0px 0px 15px rgba(53, 35, 136, 0.3); }
+      box-shadow: 0px 0px 15px rgba(53, 35, 136, 0.7); }
       .header .h__update:hover svg {
         transform: rotate(180deg); }
     .header .h__update svg {
@@ -283,7 +283,36 @@ body {
     width: 100%;
     margin: 0 auto;
     background-size: cover;
-    background-position: center; }
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; }
+    .generated-film__backdrop:after {
+      content: '';
+      width: 100%;
+      position: absolute;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.25); }
+    .generated-film__backdrop .play__btn {
+      width: 90px;
+      height: 90px;
+      position: relative;
+      z-index: 10;
+      background: rgba(69, 46, 180, 0.75);
+      transition: all .15s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50px;
+      cursor: pointer; }
+      .generated-film__backdrop .play__btn:hover {
+        background: rgba(69, 46, 180, 0.85); }
+      .generated-film__backdrop .play__btn svg {
+        width: 40px;
+        height: 40px;
+        margin-right: -5px;
+        fill: #fff; }
   .generated-film__video {
     height: 500px; }
     .generated-film__video iframe {

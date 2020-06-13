@@ -168,7 +168,7 @@ body
             width: 60px
             height: 60px
             border-radius: 80px
-            background: linear-gradient(142.16deg, #352388 30.61%, #3A2B80 95.25%)
+            background: linear-gradient(131.97deg, #5238CF 35.87%, #712EFF 66.42%)
             align-items: center
             justify-content: center
             cursor: pointer
@@ -177,7 +177,7 @@ body
             &--show
                 display: flex
             &:hover
-                box-shadow: 0px 0px 15px rgba(53, 35, 136, 0.30)
+                box-shadow: 0px 0px 15px rgba(53, 35, 136, 0.70)
                 svg
                     transform: rotate(180deg)
             svg
@@ -258,6 +258,35 @@ body
         margin: 0 auto
         background-size: cover
         background-position: center
+        display: flex
+        justify-content: center
+        align-items: center
+        position: relative
+        &:after
+            content: ''
+            width: 100%
+            position: absolute
+            height: 100%
+            background-color: rgba(#000, 0.25)
+        .play__btn
+            width: 90px
+            height: 90px
+            position: relative
+            z-index: 10
+            background: rgba(69, 46, 180, 0.75)
+            transition: all .15s ease
+            display: flex
+            justify-content: center
+            align-items: center
+            border-radius: 50px
+            cursor: pointer
+            &:hover
+                background: rgba(69, 46, 180, 0.85)
+            svg
+                width: 40px
+                height: 40px
+                margin-right: -5px
+                fill: #fff
     &__video
         height: 500px
         iframe
