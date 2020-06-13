@@ -12,21 +12,28 @@ from django.http import QueryDict
 from json import dumps
 
 
-def index(request):
+def index(request, id=-1):
     if request.method == 'POST':
         response_ajax = request.read().decode("UTF-8")
+        type_of_request = QueryDict(response_ajax).get('random')
         type_ = QueryDict(response_ajax).get('type')
         film = RandomFilm(type_)
-        res = film.get_film()
+
+        if type_of_request == 'false':
+            res = film.get_film_for_id(id)
+        else:
+            res = film.get_film()
 
         if res is False:
             return HttpResponse(dumps({'error_api': 'Извините, но произошла неизвестная ошибка. Попробуйте еще раз'}))
 
         res.update({"error_api": ""})
-        print(res)
         return HttpResponse(dumps(res))
 
     return render(request, 'index.html')
+
+
+
 
 
 def auth_users(request):

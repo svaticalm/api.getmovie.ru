@@ -49,6 +49,11 @@ class RandomFilm:
 
         id = self.get_film_id(res['results'])
 
+        res = self.get_film_for_id(id)
+
+        return res
+
+    def get_film_for_id(self, id):
         detail = self.get_addinf(str(id), self.url_api_detail)
 
         if detail['overview'] == '' or detail['poster_path'] == '':
@@ -61,9 +66,12 @@ class RandomFilm:
 
         return result
 
+
+
     def get_addinf(self, id, url_api):
         # Функция получает айди и юрл, возвращает дополнитуельную информацию
         url = url_api % (id, str(urlencode(self.vars_req_default)))
+        print(url)
         res = urlopen(url).read().decode(encoding="UTF-8")
         res = self.__error_or_return_dict(res)
 

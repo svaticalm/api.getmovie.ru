@@ -13,3 +13,6 @@ urlpatterns += [
 urlpatterns += [
     path("login/", views.log_in)
 ]
+urlpatterns += [
+    path("movie/<int:id>", views.index)
+]
