@@ -40,10 +40,22 @@ $(function() {
 			}
 			film.countries.html(countries);
 
-			let videoUrl = data.video_trailer.results[].length > 0 ? 'https://www.youtube.com/embed/' + data.video_trailer.results[0].key : null;
+			let videoUrl = data.video_trailer.results.length > 0 ? data.video_trailer.results[0].key : null;
 			if(videoUrl != null){
-				film.video.attr('data-src', videoUrl);
+				film.backdrop.addClass('--video');
+				film.video.attr("data-src", "http://www.youtube.com/embed/" + videoUrl + '?autoplay=1&enablejsapi=1');
+				let dataSrc = film.video.attr("data-src");
+				$('.generated-film__backdrop').on('click', function(){
+					$(".generated-film__video").show();
+					$(this).addClass("hide");
+					film.video.attr("src", dataSrc);
+				});
+			}else{
+				film.backdrop.removeClass('--video');
+				film.video.attr("data-src", "");
+				film.video.attr("src", "");
 			}
+
 
 			setTimeout(function(){
 				$('.h__update').addClass('h__update--show');
@@ -56,6 +68,8 @@ $(function() {
 		},
 		hide: function(){
 			menu.close();
+			film.video.attr("src", "");
+			$('.generated-film__backdrop').removeClass("hide");
 			$('#generated-film, #header').animate({opacity: '0'}, 500);
 			$('#generated-film, #header').addClass('scale07');
 		},

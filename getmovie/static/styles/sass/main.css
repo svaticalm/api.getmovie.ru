@@ -284,11 +284,19 @@ body {
     margin: 0 auto;
     background-size: cover;
     background-position: center;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
-    cursor: pointer; }
+    z-index: 10; }
+    .generated-film__backdrop.--video {
+      cursor: pointer;
+      transition: all .15s ease; }
+      .generated-film__backdrop.--video .play__btn {
+        display: flex; }
+      .generated-film__backdrop.--video.hide {
+        opacity: 0;
+        pointer-events: none; }
     .generated-film__backdrop:after {
       content: '';
       width: 100%;
@@ -306,7 +314,8 @@ body {
       justify-content: center;
       align-items: center;
       border-radius: 50px;
-      cursor: pointer; }
+      cursor: pointer;
+      display: none; }
       .generated-film__backdrop .play__btn:hover {
         background: rgba(69, 46, 180, 0.85); }
       .generated-film__backdrop .play__btn svg {
@@ -316,7 +325,9 @@ body {
         fill: #fff; }
   .generated-film__video {
     height: 500px;
-    display: none; }
+    position: absolute;
+    top: 90px;
+    width: 100%; }
     .generated-film__video iframe {
       width: 100%;
       height: 100%; }
