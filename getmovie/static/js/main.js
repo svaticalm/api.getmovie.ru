@@ -1,7 +1,7 @@
 $(function() {
  	let currentUrl = window.location.href;
 	if(currentUrl.indexOf('/movie/') != -1)
-	  alert('Part of URL exist');
+	  film.generate(false);
 	let film = {
 		img: $('.generated-film__info--img img'),
 		title: $('.generated-film__info--detail .title'),
@@ -58,7 +58,7 @@ $(function() {
 			$('#generated-film, #header').addClass('scale07');
 		},
 
-		generate: function(){
+		generate: function(random){
 			$.ajax({
 			    type: "POST",
 			    url: '/',
@@ -68,7 +68,7 @@ $(function() {
 			    },
 			    data: {
 			      'csrfmiddlewaretoken': $( "#get-film input[name='csrfmiddlewaretoken']" ).val(),
-				  'random': true,
+				  'random': random,
 				  'type': 'movie',
 			    },
 			    dataType: 'json',
@@ -113,14 +113,14 @@ $(function() {
 		menu.close();
 	});
 	$('#header-get-film').on('click', function(){
-		film.generate();
+		film.generate(true);
 	});
 	// Работа кнопок END
 
 	// AJAX ЗАПРОС на рандомный фильм без фильтров
 	$('#get-film').on("submit", function(){
 		event.preventDefault();
-		film.generate();
+		film.generate(true);
 	});
 
 
