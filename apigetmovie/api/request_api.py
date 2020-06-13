@@ -30,6 +30,14 @@ class RandomFilm:
         return res
 
     def get_film(self):
+        res = False
+
+        while res == False:
+            res = self.__get_film()
+
+        return res
+
+    def __get_film(self):
         self.vars_req['page'] = randint(1, self.max_page)
 
         url = self.url_api_discover % urlencode(self.vars_req)  # добавляем критерии поиска в url
@@ -42,6 +50,10 @@ class RandomFilm:
         id = self.get_film_id(res['results'])
 
         detail = self.get_addinf(str(id), self.url_api_detail)
+
+        if detail['overview'] == '' or detail['poster_path'] == '':
+            return False
+
         video_trailer = self.get_addinf(str(id), self.url_api_video)
         detail.update({"video_trailer": video_trailer})
         result = detail
