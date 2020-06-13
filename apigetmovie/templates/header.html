@@ -1,28 +1,30 @@
 {% load static %}
 <header class="header" id="header">
-    <div class="h__left">
-        <div class="h__menu">
-            <svg class="menu" id="open-menu">
-                <use xlink:href="{% static 'img/sprite.svg' %}#menu"></use>
-            </svg>
-            <svg class="close" id="close-menu">
-                <use xlink:href="{% static 'img/sprite.svg' %}#close"></use>
-            </svg>
+    <div class="header__inner">
+        <div class="h__left">
+            <div class="h__menu">
+                <svg class="menu" id="open-menu">
+                    <use xlink:href="{% static 'img/sprite.svg' %}#menu"></use>
+                </svg>
+                <svg class="close" id="close-menu">
+                    <use xlink:href="{% static 'img/sprite.svg' %}#close"></use>
+                </svg>
+            </div>
+            <div class="h__search">
+                <svg>
+                    <use xlink:href="{% static 'img/sprite.svg' %}#search"></use>
+                </svg>
+            </div>
+            <div class="h__logo">
+                <a href="/"><span class="get">get</span><span class="mov">movie</span></a>
+            </div>
         </div>
-        <div class="h__search">
-            <svg>
-                <use xlink:href="{% static 'img/sprite.svg' %}#search"></use>
-            </svg>
-        </div>
-        <div class="h__logo">
-            <span class="get">get</span><span class="mov">movie</span>
-        </div>
-    </div>
-    <div class="h__right">
-        <div class="h__update" id="header-get-film">
-            <svg>
-                <use xlink:href="{% static 'img/sprite.svg' %}#update"></use>
-            </svg>
+        <div class="h__right">
+            <div class="h__update" id="header-get-film">
+                <svg>
+                    <use xlink:href="{% static 'img/sprite.svg' %}#update"></use>
+                </svg>
+            </div>
         </div>
     </div>
 </header>
