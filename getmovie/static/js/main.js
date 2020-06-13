@@ -1,7 +1,4 @@
 $(function() {
- 	let currentUrl = window.location.href;
-	if(currentUrl.indexOf('/movie/') != -1)
-	  film.generate(false);
 	let film = {
 		img: $('.generated-film__info--img img'),
 		title: $('.generated-film__info--detail .title'),
@@ -58,10 +55,10 @@ $(function() {
 			$('#generated-film, #header').addClass('scale07');
 		},
 
-		generate: function(random){
+		generate: function(random, url){
 			$.ajax({
 			    type: "POST",
-			    url: '/',
+			    url: url,
 				beforeSend: function(){
 					film.hide();
 					preloader.start();
@@ -105,6 +102,12 @@ $(function() {
 			$('#get-film, #header').removeClass('scale07');
 		}
 	}
+
+
+	let currentUrl = window.location.href;
+	if(currentUrl.indexOf('/movie/') != -1){
+	  film.generate(false);
+  	}
 	// Работа кнопок
 	$('#open-menu').on('click', function(){
 		menu.open();
@@ -113,14 +116,14 @@ $(function() {
 		menu.close();
 	});
 	$('#header-get-film').on('click', function(){
-		film.generate(true);
+		film.generate(true, '/');
 	});
 	// Работа кнопок END
 
 	// AJAX ЗАПРОС на рандомный фильм без фильтров
 	$('#get-film').on("submit", function(){
 		event.preventDefault();
-		film.generate(true);
+		film.generate(true, '/');
 	});
 
 
