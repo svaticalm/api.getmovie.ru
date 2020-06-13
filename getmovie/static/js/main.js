@@ -71,6 +71,7 @@ $(function() {
 			    dataType: 'json',
 			    success: function (data) {
 				  setTimeout(function(){
+					  window.history.pushState("", "Новый фильм", "/movie/" + data.id);
 					  film.show(data);
 				  }, 600);
 			      console.log(data);
@@ -116,7 +117,6 @@ $(function() {
 	// AJAX ЗАПРОС на рандомный фильм без фильтров
 	$('#get-film').on("submit", function(){
 		event.preventDefault();
-	    // window.history.pushState("object or string", "Новый фильм", "/new-film");
 		film.generate();
 	});
 
