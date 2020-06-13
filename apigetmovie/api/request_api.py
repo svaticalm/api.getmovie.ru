@@ -9,8 +9,10 @@ class RandomFilm:
         self.api_key = "7e00b848ffbb0a2bb957f6631e1ad255"
         self.url_api_discover = "http://api.themoviedb.org/3/discover/" + type_ + "?%s"
         self.url_api_detail = "http://api.themoviedb.org/3/" + type_ + "/%s?%s"
+        self.url_api_video = "http://api.themoviedb.org/3/" + type_ + "/%s/videos?%s"
         self.max_page = 500
         self.type = type_
+        self.vars_req_default = {"api_key": self.api_key, 'language': 'ru'}
         self.vars_req = {"api_key": self.api_key, 'language': 'ru'}
         self.vars_req.update(kwargs)
 
@@ -39,16 +41,18 @@ class RandomFilm:
 
         id = self.get_film_id(res['results'])
 
-        res = self.get_detail(id)
+        detail = self.get_addinf(str(id), self.url_api_detail)
+        video_trailer = self.get_addinf(str(id), self.url_api_video)
+        detail.update({"video_trailer": video_trailer})
+        result = detail
+        print(detail)
 
-        return res
+        return result
 
-    def get_detail(self, id):
-
-        url = self.url_api_detail % (id, urlencode(self.vars_req))
-        print(url)
+    def get_addinf(self, id, url_api):
+        # Функция получает айди и юрл, возвращает дополнитуельную информацию
+        url = url_api % (id, str(urlencode(self.vars_req_default)))
         res = urlopen(url).read().decode(encoding="UTF-8")
-
         res = self.__error_or_return_dict(res)
 
         return res
