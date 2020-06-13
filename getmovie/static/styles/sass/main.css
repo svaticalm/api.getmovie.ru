@@ -215,6 +215,9 @@ body {
     line-height: 42px;
     margin-top: -7px;
     cursor: pointer; }
+    .header .h__logo a {
+      text-decoration: none;
+      color: #fff !important; }
   .header .h__left {
     display: flex;
     align-items: center; }

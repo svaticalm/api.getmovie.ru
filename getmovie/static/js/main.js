@@ -116,6 +116,7 @@ $(function() {
 	// AJAX ЗАПРОС на рандомный фильм без фильтров
 	$('#get-film').on("submit", function(){
 		event.preventDefault();
+	    // window.history.pushState("object or string", "Новый фильм", "/new-film");
 		film.generate();
 	});
 
