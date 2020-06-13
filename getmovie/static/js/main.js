@@ -1,4 +1,7 @@
 $(function() {
+ 	let currentUrl = window.location.href;
+	if(currentUrl.indexOf('/movie/') != -1)
+	  alert('Part of URL exist');
 	let film = {
 		img: $('.generated-film__info--img img'),
 		title: $('.generated-film__info--detail .title'),
