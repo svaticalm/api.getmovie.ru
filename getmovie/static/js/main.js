@@ -43,8 +43,7 @@ $(function() {
 			let videoUrl = data.video_trailer.results.length > 0 ? data.video_trailer.results[0].key : null;
 			if(videoUrl != null){
 				film.backdrop.addClass('--video');
-				film.video.attr("data-src", "http://www.youtube.com/embed/" + videoUrl + '?autoplay=1');
-				film.video.attr("src", "");
+				film.video.attr("data-src", "http://www.youtube.com/embed/" + videoUrl + '?autoplay=1&enablejsapi=1');
 				let dataSrc = film.video.attr("data-src");
 				$('.generated-film__backdrop').on('click', function(){
 					$(".generated-film__video").show();
@@ -69,6 +68,8 @@ $(function() {
 		},
 		hide: function(){
 			menu.close();
+			film.video.attr("src", "");
+			$('.generated-film__backdrop').removeClass("hide");
 			$('#generated-film, #header').animate({opacity: '0'}, 500);
 			$('#generated-film, #header').addClass('scale07');
 		},
