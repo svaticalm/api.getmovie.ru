@@ -11,6 +11,7 @@ $(function() {
 		voteAverage: $('.generated-film__info--detail .ratings .votes .top'),
 		popularity: $('.generated-film__info--detail .ratings .rating .top'),
 		backdrop: $('.generated-film__backdrop'),
+		video: $('.generated-film__video iframe'),
 
 
 		show: function(data){
@@ -39,6 +40,10 @@ $(function() {
 			}
 			film.countries.html(countries);
 
+			let videoUrl = data.video_trailer.results[].length > 0 ? 'https://www.youtube.com/embed/' + data.video_trailer.results[0].key : null;
+			if(videoUrl != null){
+				film.video.attr('data-src', videoUrl);
+			}
 
 			setTimeout(function(){
 				$('.h__update').addClass('h__update--show');
