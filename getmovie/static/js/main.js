@@ -81,6 +81,7 @@ $(function() {
 				beforeSend: function(){
 			    },
 			    data: {
+			      'csrfmiddlewaretoken': $( "#get-film input[name='csrfmiddlewaretoken']" ).val(),
 				  'filmId': id,
 			    },
 			    dataType: 'json',

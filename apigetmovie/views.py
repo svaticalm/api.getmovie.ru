@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login, logout, get_user
 from apigetmovie.api.request_api import RandomFilm
 from django.http import QueryDict
 from json import dumps
-from .models import UserFavID, FavMovie
+from .models import Fav, UserFav
 
 
 def index(request, id=-1):
@@ -86,9 +86,25 @@ def log_in(request):
 
 
 def add_fav_id(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect('/')
 
+    if not request.user.is_authenticated:
+        return HttpResponse(dumps({'fav_add': False, }))
     if request.method == "POST":
         response_ajax = request.read().decode("UTF-8")
-        type_of_request = QueryDict(response_ajax).get('id')
+        id = QueryDict(response_ajax).get('filmId')
+        userid = User.objects.get(username=request.user.username).id
+
+        favid_or_not = Fav.objects.filter(favid=id).count()
+
+        if favid_or_not == 0:
+            Fav.objects.create(favid=id)
+
+        obj_ = UserFav.objects.filter(favid=id, userid=userid).count()
+        print("favid=%s userid=%s" %(id,userid))
+        if obj_ == 0:
+            print("obj_ = 0")
+            UserFav.objects.create(userid=userid, favid=id)
+            return HttpResponse(dumps({'fav_add': True, }))
+        return HttpResponse(dumps({'fav_add': False, }))
+
+    return HttpResponseRedirect('/')

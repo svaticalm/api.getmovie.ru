@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import FavMovie, UserFavID
+from .models import Fav, UserFav
 
 # Register your models here.
 
-admin.site.register(FavMovie)
-admin.site.register(UserFavID)
+admin.site.register(Fav)
+admin.site.register(UserFav)

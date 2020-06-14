@@ -17,5 +17,5 @@ urlpatterns += [
     path("movie/<int:id>", views.index)
 ]
 urlpatterns += [
-    path("fav-id/", views.add_fav_id)
+    path("add-fav", views.add_fav_id)
 ]
