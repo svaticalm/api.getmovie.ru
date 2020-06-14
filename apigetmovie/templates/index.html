@@ -4,16 +4,18 @@
 <div class="content">
     <form id="get-film" method="POST">
         {% csrf_token %}
-        <button class="btn btn-icon" type="submit">
-            <div class="icon">
-                <svg>
-                    <use xlink:href="{% static 'img/sprite.svg' %}#update"></use>
-                </svg>
-            </div>
-            <div class="text">
-                Сгенерировать фильм
-            </div>
-        </button>
+        <div>
+            <button class="btn btn-icon" type="submit">
+                <div class="icon">
+                    <svg>
+                        <use xlink:href="{% static 'img/sprite.svg' %}#update"></use>
+                    </svg>
+                </div>
+                <div class="text">
+                    Сгенерировать фильм
+                </div>
+            </button>
+        </div>
     </form>
     <div class="generated-film scale07" id="generated-film">
         <div class="generated-film__backdrop">
@@ -63,12 +65,18 @@
                         </div>
                     </div>
                 </div>
+                <button class="btn btn--green mt32" id="add-to-fav">
+                    <div class="text">
+                        Добавить в избранное
+                    </div>
+                </button>
             </div>
         </div>
         <div class="block-ttl">Описание</div>
         <div class="generated-film__overview">
 
         </div>
+
     </div>
     <p style="display: none">
         {% if user.is_authenticated  %}<a href="">{{ user.username }}</a>
