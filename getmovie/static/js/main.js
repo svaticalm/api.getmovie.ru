@@ -12,7 +12,7 @@ $(function() {
 		popularity: $('.generated-film__info--detail .ratings .rating .top'),
 		backdrop: $('.generated-film__backdrop'),
 		video: $('.generated-film__video iframe'),
-
+		currentFilm: null,
 
 		show: function(data){
 			film.img.attr('src', 'https://image.tmdb.org/t/p/w500/' + data.poster_path);
@@ -74,6 +74,22 @@ $(function() {
 			$('#generated-film, #header').addClass('scale07');
 		},
 
+		addToFav: function(id){
+			$.ajax({
+			    type: "POST",
+			    url: '/add-fav',
+				beforeSend: function(){
+			    },
+			    data: {
+				  'filmId': id,
+			    },
+			    dataType: 'json',
+			    success: function (data) {
+			      console.log(data);
+			    }
+		  });
+		},
+
 		generate: function(random, url){
 			$.ajax({
 			    type: "POST",
@@ -93,6 +109,7 @@ $(function() {
 					  window.history.pushState("", "Новый фильм", "/movie/" + data.id);
 					  film.show(data);
 				  }, 600);
+				  film.currentFilm = data;
 			      console.log(data);
 			    }
 		  });
@@ -136,6 +153,9 @@ $(function() {
 	});
 	$('#header-get-film').on('click', function(){
 		film.generate(true, '/');
+	});
+	$('#add-to-fav').on('click', function(){
+		film.addToFav(film.currentFilm.id);
 	});
 	// Работа кнопок END
 
