@@ -47,6 +47,19 @@ button {
   -moz-user-select: none;
   -ms-user-select: none; }
 
+.inp {
+  width: 300px; }
+  .inp input {
+    height: 48px;
+    width: 100%;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid rgba(53, 52, 57, 0.2);
+    font-size: 18px;
+    transition: all .15s ease; }
+    .inp input:focus {
+      border-color: #452EB4; }
+
 .mt32 {
   margin-top: 32px; }
 
@@ -189,6 +202,8 @@ body {
     height: 60px;
     font-weight: bold;
     font-size: 17px; }
+  .btn--mini .text {
+    height: 45px; }
   .btn--green .text {
     background: linear-gradient(139.9deg, #4AD379 32.31%, #3DCA6D 67.92%); }
   .btn--green:hover {
@@ -214,17 +229,39 @@ body {
   height: 100vh;
   background-color: #fff;
   transition: all .35s ease;
-  overflow: hidden; }
-  .main-menu .login {
+  overflow: hidden;
+  position: fixed;
+  left: 0;
+  top: 0; }
+  .main-menu .auth-form {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-top: 32px;
     flex-direction: column;
-    height: 100%; }
-    .main-menu .login a {
+    height: 100%;
+    transition: transform .25s ease; }
+    .main-menu .auth-form.hide {
+      display: none;
+      opacity: 0; }
+    .main-menu .auth-form .ttl {
+      color: #353439;
+      font-size: 24px;
+      line-height: 29px;
+      font-weight: bold; }
+    .main-menu .auth-form a {
       color: #fff; }
+    .main-menu .auth-form .submit-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center; }
+      .main-menu .auth-form .submit-button .bottom-text {
+        color: rgba(53, 52, 57, 0.5); }
+        .main-menu .auth-form .submit-button .bottom-text a {
+          color: rgba(69, 46, 180, 0.75);
+          text-decoration: none; }
+          .main-menu .auth-form .submit-button .bottom-text a:hover {
+            color: #452EB4; }
 
 .header {
   width: 100%;

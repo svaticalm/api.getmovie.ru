@@ -1,4 +1,25 @@
 $(function() {
+
+	let user = {
+		currentUser: null,
+
+		getUser: function(){
+			$.ajax({
+			    type: "POST",
+			    url: '/get-user',
+				beforeSend: function(){
+			    },
+			    data: {
+				  'getUser': true,
+			    },
+			    dataType: 'json',
+			    success: function (data) {
+			      console.log(data);
+			    }
+		  });
+		},
+	}
+
 	let film = {
 		img: $('.generated-film__info--img img'),
 		title: $('.generated-film__info--detail .title'),
@@ -13,6 +34,7 @@ $(function() {
 		backdrop: $('.generated-film__backdrop'),
 		video: $('.generated-film__video iframe'),
 		currentFilm: null,
+		currentType: 'movie',
 
 		show: function(data){
 			film.img.attr('src', 'https://image.tmdb.org/t/p/w500/' + data.poster_path);
@@ -74,7 +96,7 @@ $(function() {
 			$('#generated-film, #header').addClass('scale07');
 		},
 
-		addToFav: function(id){
+		addToFav: function(id, type){
 			$.ajax({
 			    type: "POST",
 			    url: '/add-fav',
@@ -82,6 +104,7 @@ $(function() {
 			    },
 			    data: {
 				  'filmId': id,
+				  'type': type,
 			    },
 			    dataType: 'json',
 			    success: function (data) {
@@ -90,7 +113,7 @@ $(function() {
 		  });
 		},
 
-		generate: function(random, url){
+		generate: function(random, url, type){
 			$.ajax({
 			    type: "POST",
 			    url: url,
@@ -101,7 +124,7 @@ $(function() {
 			    data: {
 			      'csrfmiddlewaretoken': $( "#get-film input[name='csrfmiddlewaretoken']" ).val(),
 				  'random': random,
-				  'type': 'movie',
+				  'type': type,
 			    },
 			    dataType: 'json',
 			    success: function (data) {
@@ -124,6 +147,59 @@ $(function() {
 		close: function(){
 			$('body').removeClass('opened-menu');
 		},
+		auth: {
+			signup: function(){
+					let form_data = $('#sign-form').serialize();
+					$.ajax({
+						type: "POST",
+						url: '/signup',
+						beforeSend: function(){
+						},
+						data: form_data,
+						dataType: 'json',
+						success: function (data) {
+						  console.log(data);
+						}
+				  });
+			},
+			login: function(){
+					let form_data = $('#login-form').serialize();
+					$.ajax({
+						type: "POST",
+						url: '/login',
+						beforeSend: function(){
+						},
+						data: form_data,
+						dataType: 'json',
+						success: function (data) {
+						  console.log(data);
+						}
+				  });
+			},
+			showLogin: function(){
+				$('#signup').animate({opacity: '0'}, 500);
+				$('#signup').addClass('scale07');
+				setTimeout(function(){
+					$('#signup').addClass('hide');
+					$('#login').removeClass('hide');
+					$('#login').animate({opacity: '1'}, 500);
+					$('#login').removeClass('scale07');
+					$('#login-form input[name="username"]').focus();
+				}, 500 );
+			},
+			showSignup: function(){
+				$('#login').animate({opacity: '0'}, 500);
+				$('#login').addClass('scale07');
+				setTimeout(function(){
+					$('#login').addClass('hide');
+					$('#signup').removeClass('hide');
+					$('#signup').animate({opacity: '1'}, 500);
+					$('#signup').removeClass('scale07');
+					$('#signup input[name="email"]').focus();
+				}, 500 );
+			},
+
+		}
 	}
 
 	let preloader = {
@@ -139,10 +215,11 @@ $(function() {
 		}
 	}
 
+	user.getUser();
 
 	let currentUrl = window.location.href;
 	if(currentUrl.indexOf('/movie/') != -1){
-	  film.generate(false);
+	  film.generate(false, '', film.currentType);
   	}
 	// Работа кнопок
 	$('#open-menu').on('click', function(){
@@ -152,17 +229,30 @@ $(function() {
 		menu.close();
 	});
 	$('#header-get-film').on('click', function(){
-		film.generate(true, '/');
+		film.generate(true, '/', film.currentType);
 	});
 	$('#add-to-fav').on('click', function(){
-		film.addToFav(film.currentFilm.id);
+		film.addToFav(film.currentFilm.id, film.currentType);
+	});
+	$('#signup-btn').on('click', function(){
+		menu.auth.signup();
+	});
+	$('#login-btn').on('click', function(){
+		menu.auth.login();
+	});
+
+	$('#show-login').on('click', function(){
+		menu.auth.showLogin();
+	});
+	$('#show-signup').on('click', function(){
+		menu.auth.showSignup();
 	});
 	// Работа кнопок END
 
 	// AJAX ЗАПРОС на рандомный фильм без фильтров
 	$('#get-film').on("submit", function(){
 		event.preventDefault();
-		film.generate(true, '/');
+		film.generate(true, '/', film.currentType);
 	});
 
 
