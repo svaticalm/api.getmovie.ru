@@ -105,7 +105,10 @@ def add_fav_id(request):
 
         if obj_ == 0:
             UserFav.objects.create(userid=userid, favid=id)
-            return HttpResponse(dumps({'fav_add': True, "authenticated": True}))
+            result = get_list_favorite(request)
+            result.update({'fav_add': True, "authenticated": True})
+            
+            return HttpResponse(dumps(result))
         return HttpResponse(dumps({'fav_add': False, "authenticated": True}))
 
     return HttpResponseRedirect('/')
@@ -117,24 +120,27 @@ def get_favs(request):
         return HttpResponse(dumps({"authenticated": False}))
 
     if request.method == "POST":
-        userid = User.objects.get(username=request.user.username).id
-        list_id = UserFav.objects.filter(userid=userid)
-        result = {}
-        i = 1
-        for id in list_id:
-            print(id.get_favid())
-            type_ = Fav.objects.get(favid=id.get_favid()).get_type()
-            print(type_)
-            film = RandomFilm(type_).get_film_for_id(id.get_favid())
-
-            res = {"id": id.get_favid(), "type": type_, "poster_path": film["poster_path"], "title": film["title"]}
-            result.update({str(i): res})
-
-        HttpResponse(result)
+        result = get_list_favorite(request)
+        HttpResponse(dumps(result))
 
     return HttpResponseRedirect('/')
 
 
+def get_list_favorite(request):
+    userid = User.objects.get(username=request.user.username).id
+    list_id = UserFav.objects.filter(userid=userid)
+    result = {}
+    i = 1
+    for id in list_id:
+        print(id.get_favid())
+        type_ = Fav.objects.get(favid=id.get_favid()).get_type()
+        print(type_)
+        film = RandomFilm(type_).get_film_for_id(id.get_favid())
+
+        res = {"id": id.get_favid(), "type": type_, "poster_path": film["poster_path"], "title": film["title"]}
+        result.update({str(i): res})
+
+    return result
 
 
 
