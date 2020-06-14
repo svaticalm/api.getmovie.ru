@@ -88,23 +88,61 @@ def log_in(request):
 def add_fav_id(request):
 
     if not request.user.is_authenticated:
-        return HttpResponse(dumps({'fav_add': False, }))
+        return HttpResponse(dumps({'fav_add': False, "authenticated": False}))
+
     if request.method == "POST":
         response_ajax = request.read().decode("UTF-8")
         id = QueryDict(response_ajax).get('filmId')
+        type_ = QueryDict(response_ajax).get('film')
         userid = User.objects.get(username=request.user.username).id
 
         favid_or_not = Fav.objects.filter(favid=id).count()
 
         if favid_or_not == 0:
-            Fav.objects.create(favid=id)
+            Fav.objects.create(favid=id, type=type_)
 
         obj_ = UserFav.objects.filter(favid=id, userid=userid).count()
-        print("favid=%s userid=%s" %(id,userid))
+
         if obj_ == 0:
-            print("obj_ = 0")
             UserFav.objects.create(userid=userid, favid=id)
-            return HttpResponse(dumps({'fav_add': True, }))
-        return HttpResponse(dumps({'fav_add': False, }))
+            return HttpResponse(dumps({'fav_add': True, "authenticated": True}))
+        return HttpResponse(dumps({'fav_add': False, "authenticated": True}))
 
     return HttpResponseRedirect('/')
+
+
+def get_favs(request):
+
+    if not request.user.is_authenticated:
+        return HttpResponse(dumps({"authenticated": False}))
+
+    if request.method == "POST":
+        userid = User.objects.get(username=request.user.username).id
+        list_id = UserFav.objects.filter(userid=userid)
+        result = {}
+        i = 1
+        for id in list_id:
+            print(id.get_favid())
+            type_ = Fav.objects.get(favid=id.get_favid()).get_type()
+            print(type_)
+            film = RandomFilm(type_).get_film_for_id(id.get_favid())
+
+            res = {"id": id.get_favid(), "type": type_, "poster_path": film["poster_path"], "title": film["title"]}
+            result.update({str(i): res})
+
+        HttpResponse(result)
+
+    return HttpResponseRedirect('/')
+
+
+
+
+
+
+
+
+
+
+
+
+

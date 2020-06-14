@@ -19,3 +19,6 @@ urlpatterns += [
 urlpatterns += [
     path("add-fav", views.add_fav_id)
 ]
+urlpatterns += [
+    path("get-favs", views.get_favs)
+]
