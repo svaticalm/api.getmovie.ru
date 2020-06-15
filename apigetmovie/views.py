@@ -11,6 +11,7 @@ from apigetmovie.api.request_api import RandomFilm
 from django.http import QueryDict
 from json import dumps
 from .models import Fav, UserFav
+from urllib.parse import parse_qs
 
 
 def index(request, id=-1):
@@ -34,56 +35,75 @@ def index(request, id=-1):
     return render(request, 'index.html')
 
 
-def auth_users(request):
+def signup(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect('/')
 
     if request.method == 'POST':
-        form = RegistrationUsersForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            user = User.objects.filter(email=email).count()
-            if user is not 0:
-                form.errors['email'] = ["такой пользователь уже существует"]
-            else:
-                user = User.objects.create_user(username, email, password)
-                user.save()
-                return HttpResponseRedirect('/')
+        errors = {}
+        response_ajax = parse_qs(request.read().decode("UTF-8"))
+        username = response_ajax['username'][0]
+        email = response_ajax['email'][0]
+        password = response_ajax['password'][0]
+        password_repeat = response_ajax['password-repeat'][0]
 
-    else:
-        form = RegistrationUsersForm()
+        exist_email = User.objects.filter(email=email).count()
+        if exist_email > 0:
+            errors.update({'signup_error_email': 'данный email уже используется',})
 
-    return render(request, 'auth.html', {'form': form})
+        exist_username = User.objects.filter(username=username).count()
+
+        if exist_username > 0:
+            errors.update({'signup_error_username': 'пользователь с таким именем уже существует',})
+
+        if password != password_repeat:
+            errors.update({'signup_error_password': 'пароли не совпадают'})
+
+        if errors != {}:
+            res = dumps({'signup': False, 'errors': errors})
+            return HttpResponse(res)
+
+        user = User.objects.create_user(username, email, password)
+        user.save()
+
+        user = authenticate(request, username=username, password=password)
+        login(request, user)
+        return HttpResponse(dumps({'login': True, 'signup': True}))
 
 
-def logout_view(request):
+    return HttpResponseRedirect('/')
+
+
+def logout_(request):
     logout(request)
     return HttpResponseRedirect('/')
 
 
-def log_in(request):
-
+def login_(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect('/')
 
     if request.method == 'POST':
-        form = LoginFormUser(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return HttpResponseRedirect('/')
-            else:
-                form.errors['username'] = ["Пользователь не найден"]
-    else:
-        form = LoginFormUser()
+        response_ajax = parse_qs(request.read().decode("UTF-8"))
+        username = response_ajax['username'][0]
+        password = response_ajax['password'][0]
 
-    return render(request, 'login.html', {'form': form})
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponse(dumps({'login': True}))
+        else:
+            return HttpResponse(dumps({'login': False}))
 
+    return HttpResponseRedirect('/')
+
+
+def get_user(request):
+    if request.user.is_authenticated:
+        username = request.user.username
+        return HttpResponse(dumps({'username': username, }))
+
+    return HttpResponse(dumps({'username': False}))
 
 def add_fav_id(request):
 
@@ -93,7 +113,7 @@ def add_fav_id(request):
     if request.method == "POST":
         response_ajax = request.read().decode("UTF-8")
         id = QueryDict(response_ajax).get('filmId')
-        type_ = QueryDict(response_ajax).get('film')
+        type_ = QueryDict(response_ajax).get('type')
         userid = User.objects.get(username=request.user.username).id
 
         favid_or_not = Fav.objects.filter(favid=id).count()
@@ -107,7 +127,7 @@ def add_fav_id(request):
             UserFav.objects.create(userid=userid, favid=id)
             result = get_list_favorite(request)
             result.update({'fav_add': True, "authenticated": True})
-            
+
             return HttpResponse(dumps(result))
         return HttpResponse(dumps({'fav_add': False, "authenticated": True}))
 
