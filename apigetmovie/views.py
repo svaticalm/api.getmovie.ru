@@ -11,6 +11,7 @@ from apigetmovie.api.request_api import RandomFilm
 from django.http import QueryDict
 from json import dumps
 from .models import Fav, UserFav
+from urllib.parse import parse_qs
 
 
 def index(request, id=-1):
@@ -40,11 +41,11 @@ def signup(request):
 
     if request.method == 'POST':
         errors = {}
-        response_ajax = request.read().decode("UTF-8")
-        username = response_ajax.get('username')
-        email = response_ajax.get('email')
-        password = response_ajax.get('password')
-        password_repeat = response_ajax.get('password-repeat')
+        response_ajax = parse_qs(request.read().decode("UTF-8"))
+        username = response_ajax['username'][0]
+        email = response_ajax['email'][0]
+        password = response_ajax['password'][0]
+        password_repeat = response_ajax['password-repeat'][0]
 
         exist_email = User.objects.filter(email=email).count()
         if exist_email > 0:
@@ -65,7 +66,10 @@ def signup(request):
         user = User.objects.create_user(username, email, password)
         user.save()
 
-        return login_(request)
+        user = authenticate(request, username=username, password=password)
+        login(request, user)
+        return HttpResponse(dumps({'login': True, 'signup': True}))
+
 
     return HttpResponseRedirect('/')
 
@@ -76,11 +80,13 @@ def logout_(request):
 
 
 def login_(request):
-
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/')
+    
     if request.method == 'POST':
-        response_ajax = request.read().decode("UTF-8")
-        username = response_ajax.get('username')
-        password = response_ajax.get('password')
+        response_ajax = parse_qs(request.read().decode("UTF-8"))
+        username = response_ajax['username'][0]
+        password = response_ajax['password'][0]
 
         user = authenticate(request, username=username, password=password)
         if user is not None:
