@@ -82,7 +82,7 @@ def logout_(request):
 def login_(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect('/')
-    
+
     if request.method == 'POST':
         response_ajax = parse_qs(request.read().decode("UTF-8"))
         username = response_ajax['username'][0]
@@ -97,6 +97,12 @@ def login_(request):
 
     return HttpResponseRedirect('/')
 
+
+def get_user(request):
+    if request.user.is_authenticated:
+        username = request.user.username
+        return HttpResponse(dumps({'username': username, }))
+    
 
 def add_fav_id(request):
 

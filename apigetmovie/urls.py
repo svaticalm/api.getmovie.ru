@@ -22,3 +22,6 @@ urlpatterns += [
 urlpatterns += [
     path("get-favs", views.get_favs)
 ]
+urlpatterns += [
+    path("get-user", views.get_user)
+]
