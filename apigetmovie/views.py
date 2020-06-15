@@ -102,7 +102,8 @@ def get_user(request):
     if request.user.is_authenticated:
         username = request.user.username
         return HttpResponse(dumps({'username': username, }))
-    
+
+    return HttpResponse(dumps({'username': False}))
 
 def add_fav_id(request):
 
