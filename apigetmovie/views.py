@@ -31,8 +31,7 @@ def index(request, id=-1):
             return HttpResponse(dumps({'error_api': 'Извините, но произошла неизвестная ошибка. Попробуйте еще раз'}))
 
         res.update({"error_api": ""})
-        credits_list = film.get_credits(id)
-        res.update({"credits": credits_list, })
+
         return HttpResponse(dumps(res))
 
     return render(request, 'index.html')
@@ -161,14 +160,14 @@ def get_list_favorite(username):
     list_id = UserFav.objects.filter(userid=userid)
     result = {}
     i = 1
-    for id in list_id:
-        print(id.get_favid())
+
+    for id in list_id.all():
         type_ = Fav.objects.get(favid=id.get_favid()).get_type()
-        print(type_)
         film = RandomFilm(type_).get_film_for_id(id.get_favid())
 
         res = {"id": id.get_favid(), "type": type_, "poster_path": film["poster_path"], "title": film["title"]}
         result.update({str(i): res})
+        i +=1
     result = {"favorites": result, "username": username}
     return result
 
