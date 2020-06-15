@@ -23,6 +23,7 @@ def index(request, id=-1):
 
         if type_of_request == 'false':
             res = film.get_film_for_id(id)
+
         else:
             res = film.get_film()
 
@@ -30,6 +31,8 @@ def index(request, id=-1):
             return HttpResponse(dumps({'error_api': 'Извините, но произошла неизвестная ошибка. Попробуйте еще раз'}))
 
         res.update({"error_api": ""})
+        credits_list = film.get_credits(id)
+        res.update({"credits": credits_list, })
         return HttpResponse(dumps(res))
 
     return render(request, 'index.html')
@@ -140,17 +143,6 @@ def add_fav_id(request):
 
     return HttpResponseRedirect('/')
 
-
-def get_credits(request):
-    if request.method == "POST":
-        response_ajax = request.read().decode("UTF-8")
-        id = QueryDict(response_ajax).get('filmId')
-        type_ = QueryDict(response_ajax).get('type')
-        film_credits = RandomFilm(type_).get_credits(id)
-
-        return HttpResponse(dumps(film_credits))
-
-    return HttpResponseRedirect('/')
 
 def get_favs(request):
 
