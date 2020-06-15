@@ -107,7 +107,7 @@ def add_fav_id(request):
             UserFav.objects.create(userid=userid, favid=id)
             result = get_list_favorite(request)
             result.update({'fav_add': True, "authenticated": True})
-            
+
             return HttpResponse(dumps(result))
         return HttpResponse(dumps({'fav_add': False, "authenticated": True}))
 
