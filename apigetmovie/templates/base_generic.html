@@ -10,50 +10,59 @@
 </head>
 <body>
     <div class="main-menu">
-        <div><a href="javascript:void(0);" id="logout-btn">ВЫЙТИ</a></div>
-        <div class="auth-form --signup" id="signup">
-            <div class="ttl mb32">Регистрация</div>
-            <form id="signup-form" method="POST">
-                {% csrf_token %}
-                <div class="inp">
-                    <input type="text" name="email" placeholder="Почта">
-                </div>
-                <div class="inp mt16">
-                    <input type="text" name="username" placeholder="Логин">
-                </div>
-                <div class="inp mt16">
-                    <input type="password" name="password" placeholder="Пароль">
-                </div>
-                <div class="inp mt16">
-                    <input type="password" name="password-repeat" placeholder="Повторите пароль">
-                </div>
-            </form>
-            <div class="mt32 submit-button">
-                <button class="btn" id='signup-btn'>
-                    <div class="text">Зарегистрироваться</div>
-                </button>
-                <div class="mt16 bottom-text">
-                    Уже есть аккаунт? <a href="javascript:void(0);" id="show-login">Войти</a>
+        <div class="login-ok">
+            <svg class="check" id="close-menu">
+                <use xlink:href="{% static 'img/sprite.svg' %}#check"></use>
+            </svg>
+        </div>
+        <div class="user-info" id="user-info">
+            <div><a href="/logout" id="logout-btn">ВЫЙТИ</a></div>
+        </div>
+        <div id="auth" class="auth">
+            <div class="auth-form --signup" id="signup">
+                <div class="ttl mb32">Регистрация</div>
+                <form id="signup-form" method="POST">
+                    {% csrf_token %}
+                    <div class="inp">
+                        <input type="text" name="email" placeholder="Почта">
+                    </div>
+                    <div class="inp mt16">
+                        <input type="text" name="username" placeholder="Логин">
+                    </div>
+                    <div class="inp mt16">
+                        <input type="password" name="password" placeholder="Пароль">
+                    </div>
+                    <div class="inp mt16">
+                        <input type="password" name="password-repeat" placeholder="Повторите пароль">
+                    </div>
+                </form>
+                <div class="mt32 submit-button">
+                    <button class="btn" id='signup-btn'>
+                        <div class="text">Зарегистрироваться</div>
+                    </button>
+                    <div class="mt16 bottom-text">
+                        Уже есть аккаунт? <a href="javascript:void(0);" id="show-login">Войти</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="auth-form --login scale07 hide" id="login">
-            <div class="ttl mb32">Вход</div>
-            <form id="login-form" method="POST">
-                {% csrf_token %}
-                <div class="inp">
-                    <input type="text" name="username" placeholder="Логин">
-                </div>
-                <div class="inp mt16">
-                    <input type="password" name="password" placeholder="Пароль">
-                </div>
-            </form>
-            <div class="mt32 submit-button">
-                <button class="btn btn--green" id="login-btn">
-                    <div class="text">Войти</div>
-                </button>
-                <div class="mt16 bottom-text">
-                    Ещё нет аккаунта? <a href="javascript:void(0);" id="show-signup">Регистрация</a>
+            <div class="auth-form --login scale07 hide" id="login">
+                <div class="ttl mb32">Вход</div>
+                <form id="login-form" method="POST">
+                    {% csrf_token %}
+                    <div class="inp">
+                        <input type="text" name="username" placeholder="Логин">
+                    </div>
+                    <div class="inp mt16">
+                        <input type="password" name="password" placeholder="Пароль">
+                    </div>
+                </form>
+                <div class="mt32 submit-button">
+                    <button class="btn btn--green" id="login-btn">
+                        <div class="text">Войти</div>
+                    </button>
+                    <div class="mt16 bottom-text">
+                        Ещё нет аккаунта? <a href="javascript:void(0);" id="show-signup">Регистрация</a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -15,23 +15,9 @@ $(function() {
 			    },
 			    dataType: 'json',
 			    success: function (data) {
-			      console.log(data);
-			    }
-		  });
-		},
-		logout: function(){
-			$.ajax({
-			    type: "POST",
-			    url: '/logout',
-				beforeSend: function(){
-			    },
-			    data: {
-				  'logout': true,
-				  'csrfmiddlewaretoken': $( "#get-film input[name='csrfmiddlewaretoken']" ).val(),
-			    },
-			    dataType: 'json',
-			    success: function (data) {
-			      console.log(data);
+			      if(data.username){
+					   menu.showUser();
+				  }
 			    }
 		  });
 		},
@@ -165,6 +151,16 @@ $(function() {
 		close: function(){
 			$('body').removeClass('opened-menu');
 		},
+		showUser: function(){
+			$('.login-ok').addClass('show');
+			setTimeout(() => {
+				$('#auth').hide();
+				$('#user-info').show();
+			}, 350);
+			setTimeout(() => {
+				$('.login-ok').removeClass('show');
+			}, 500);
+		},
 		auth: {
 			signup: function(){
 					let form_data = $('#signup-form').serialize();
@@ -176,7 +172,9 @@ $(function() {
 						data: form_data,
 						dataType: 'json',
 						success: function (data) {
-						  console.log(data);
+							if(data.login){
+  							  menu.showUser();
+  						  }
 						}
 				  });
 			},
@@ -191,7 +189,9 @@ $(function() {
 						data: form_data,
 						dataType: 'json',
 						success: function (data) {
-						  console.log(data);
+						  if(data.login){
+							  menu.showUser();
+						  }
 						}
 				  });
 			},
@@ -258,9 +258,6 @@ $(function() {
 	});
 	$('#login-btn').on('click', function(){
 		menu.auth.login();
-	});
-	$('#logout-btn').on('click', function(){
-		user.logout();
 	});
 
 	$('#show-login').on('click', function(){

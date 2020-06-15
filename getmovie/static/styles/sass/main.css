@@ -233,6 +233,30 @@ body {
   position: fixed;
   left: 0;
   top: 0; }
+  .main-menu .login-ok {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .35s ease; }
+    .main-menu .login-ok.show {
+      opacity: 1;
+      pointer-events: all; }
+    .main-menu .login-ok .check {
+      fill: #3DCA6D;
+      width: 32px;
+      height: 32px; }
+  .main-menu .user-info {
+    display: none; }
+  .main-menu .auth {
+    height: 100%; }
   .main-menu .auth-form {
     display: flex;
     justify-content: center;
