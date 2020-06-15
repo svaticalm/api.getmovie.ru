@@ -13,6 +13,7 @@
         <div class="auth-form --signup" id="signup">
             <div class="ttl mb32">Регистрация</div>
             <form id="signup-form" method="POST">
+                {% csrf_token %}
                 <div class="inp">
                     <input type="text" name="email" placeholder="Почта">
                 </div>
@@ -38,6 +39,7 @@
         <div class="auth-form --login scale07 hide" id="login">
             <div class="ttl mb32">Вход</div>
             <form id="login-form" method="POST">
+                {% csrf_token %}
                 <div class="inp">
                     <input type="text" name="username" placeholder="Логин">
                 </div>

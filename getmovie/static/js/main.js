@@ -150,7 +150,7 @@ $(function() {
 		},
 		auth: {
 			signup: function(){
-					let form_data = $('#sign-form').serialize();
+					let form_data = $('#signup-form').serialize();
 					$.ajax({
 						type: "POST",
 						url: '/signup',
@@ -165,6 +165,7 @@ $(function() {
 			},
 			login: function(){
 					let form_data = $('#login-form').serialize();
+					form_data.csrfmiddlewaretoken = $( "#login-form input[name='csrfmiddlewaretoken']" ).val();
 					$.ajax({
 						type: "POST",
 						url: '/login',
