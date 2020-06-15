@@ -11,7 +11,7 @@ $(function() {
 			    },
 			    data: {
 				  'getUser': true,
-				  'csrfmiddlewaretoken': $( "#get-film input[name='csrfmiddlewaretoken']" ).val(),
+				  'csrfmiddlewaretoken': getCookie("csrftoken"),
 			    },
 			    dataType: 'json',
 			    success: function (data) {
@@ -106,7 +106,7 @@ $(function() {
 				beforeSend: function(){
 			    },
 			    data: {
-			      'csrfmiddlewaretoken': $( "#get-film input[name='csrfmiddlewaretoken']" ).val(),
+			      'csrfmiddlewaretoken': getCookie("csrftoken"),
 				  'filmId': id,
 				  'type': type,
 			    },
@@ -126,7 +126,7 @@ $(function() {
 					preloader.start();
 			    },
 			    data: {
-			      'csrfmiddlewaretoken': $( "#get-film input[name='csrfmiddlewaretoken']" ).val(),
+			      'csrfmiddlewaretoken': getCookie("csrftoken"),
 				  'random': random,
 				  'type': type,
 			    },
@@ -241,11 +241,11 @@ $(function() {
 	  film.generate(false, '', film.currentType);
   	}
 	// Работа кнопок
-	$('#open-menu').on('click', function(){
-		menu.open();
-	});
 	$('#close-menu').on('click', function(){
 		menu.close();
+	});
+	$('#open-menu').on('click', function(){
+		menu.open();
 	});
 	$('#header-get-film').on('click', function(){
 		film.generate(true, '/', film.currentType);
@@ -273,6 +273,20 @@ $(function() {
 		event.preventDefault();
 		film.generate(true, '/', film.currentType);
 	});
-
+	function getCookie(c_name)
+{
+    if (document.cookie.length > 0)
+    {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1)
+        {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) c_end = document.cookie.length;
+            return unescape(document.cookie.substring(c_start,c_end));
+        }
+    }
+    return "";
+ }
 
 });
