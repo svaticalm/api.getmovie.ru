@@ -11,6 +11,23 @@ $(function() {
 			    },
 			    data: {
 				  'getUser': true,
+				  'csrfmiddlewaretoken': $( "#get-film input[name='csrfmiddlewaretoken']" ).val(),
+			    },
+			    dataType: 'json',
+			    success: function (data) {
+			      console.log(data);
+			    }
+		  });
+		},
+		logout: function(){
+			$.ajax({
+			    type: "POST",
+			    url: '/logout',
+				beforeSend: function(){
+			    },
+			    data: {
+				  'logout': true,
+				  'csrfmiddlewaretoken': $( "#get-film input[name='csrfmiddlewaretoken']" ).val(),
 			    },
 			    dataType: 'json',
 			    success: function (data) {
@@ -241,6 +258,9 @@ $(function() {
 	});
 	$('#login-btn').on('click', function(){
 		menu.auth.login();
+	});
+	$('#logout-btn').on('click', function(){
+		user.logout();
 	});
 
 	$('#show-login').on('click', function(){
