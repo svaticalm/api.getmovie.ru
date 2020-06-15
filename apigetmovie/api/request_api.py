@@ -10,6 +10,7 @@ class RandomFilm:
         self.url_api_discover = "http://api.themoviedb.org/3/discover/" + type_ + "?%s"
         self.url_api_detail = "http://api.themoviedb.org/3/" + type_ + "/%s?%s"
         self.url_api_video = "http://api.themoviedb.org/3/" + type_ + "/%s/videos?%s"
+        self.url_api_credits = "https://api.themoviedb.org/3/" + type_ + "/%s/credits?%s"
         self.max_page = 500
         self.type = type_
         self.vars_req_default = {"api_key": self.api_key, 'language': 'ru'}
@@ -66,7 +67,12 @@ class RandomFilm:
 
         return result
 
+    def get_credits(self, id):
+        url = self.url_api_credits % (id, str(urlencode(self.vars_req_default)))
+        res = urlopen(url).read().decode(encoding="UTF-8")
+        res = self.__error_or_return_dict(res)
 
+        return res
 
     def get_addinf(self, id, url_api):
         # Функция получает айди и юрл, возвращает дополнитуельную информацию
