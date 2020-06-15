@@ -25,3 +25,6 @@ urlpatterns += [
 urlpatterns += [
     path("get-user", views.get_user)
 ]
+urlpatterns += [
+    path("get-credits", views.get_credits)
+]

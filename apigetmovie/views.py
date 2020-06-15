@@ -141,6 +141,17 @@ def add_fav_id(request):
     return HttpResponseRedirect('/')
 
 
+def get_credits(request):
+    if request.method == "POST":
+        response_ajax = request.read().decode("UTF-8")
+        id = QueryDict(response_ajax).get('filmId')
+        type_ = QueryDict(response_ajax).get('type')
+        film_credits = RandomFilm(type_).get_credits(id)
+
+        return HttpResponse(dumps(film_credits))
+
+    return HttpResponseRedirect('/')
+
 def get_favs(request):
 
     if not request.user.is_authenticated:
