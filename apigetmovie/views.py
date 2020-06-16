@@ -1,12 +1,8 @@
 from django.shortcuts import render
 from django.template.response import HttpResponse
-from django.views import generic
-from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
-from django.urls import reverse
-from .forms import RegistrationUsersForm, LoginFormUser
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout, get_user
+from django.contrib.auth import authenticate, login, logout
 from apigetmovie.api.request_api import RandomFilm
 from django.http import QueryDict
 from json import dumps
@@ -159,7 +155,9 @@ def remove_fav(request):
             HttpResponse(dumps({"error": "film not added to favorites list"}))
 
         if id_favorite_of_user.delete():
-            return HttpResponse(dumps({"error": False}))
+            result = get_list_favorite(request.user.username)
+            result.update({'error': False, })
+            return HttpResponse(dumps(result))
 
     return HttpResponseRedirect('/')
 
