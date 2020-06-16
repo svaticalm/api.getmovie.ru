@@ -114,7 +114,7 @@ def get_user(request):
     return HttpResponse(dumps({'username': False}))
 
 
-def add_fav_id(request):
+def add_fav(request):
 
     if not request.user.is_authenticated:
         return HttpResponse(dumps({'fav_add': False, "authenticated": False}))
@@ -139,6 +139,27 @@ def add_fav_id(request):
 
             return HttpResponse(dumps(result))
         return HttpResponse(dumps({'fav_add': False, "authenticated": True}))
+
+    return HttpResponseRedirect('/')
+
+
+def remove_fav(request):
+    if request.method == "POST":
+
+        if not request.user.is_authenticated:
+            return HttpResponse(dumps({'fav_add': False, "authenticated": False}))
+
+        response_ajax = request.read().decode("UTF-8")
+        id = QueryDict(response_ajax).get('filmId')
+        userid = User.objects.get(username=request.user.username).id
+        id_favorite_of_user = UserFav.objects.filter(favid=id, userid=userid)
+        exist_id_favorite_of_user = id_favorite_of_user.count()
+
+        if exist_id_favorite_of_user == 0:
+            HttpResponse(dumps({"error": "film not added to favorites list"}))
+
+        if id_favorite_of_user.delete():
+            return HttpResponse(dumps({"error": False}))
 
     return HttpResponseRedirect('/')
 
