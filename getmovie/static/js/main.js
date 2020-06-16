@@ -17,6 +17,8 @@ $(function() {
 			    success: function (data) {
 			      if(data.username){
 					   menu.showUser();
+					   menu.favs = data.favorites;
+	 				   menu.getFavourites();
 				  }
 			    }
 		  });
@@ -112,7 +114,26 @@ $(function() {
 			    },
 			    dataType: 'json',
 			    success: function (data) {
-			      console.log(data);
+			      menu.favs = data.favorites;
+				  menu.getFavourites();
+			    }
+		  });
+		},
+		removeFav: function(id, type){
+			$.ajax({
+			    type: "POST",
+			    url: '/remove-fav',
+				beforeSend: function(){
+			    },
+			    data: {
+			      'csrfmiddlewaretoken': getCookie("csrftoken"),
+				  'filmId': id,
+				  'type': type,
+			    },
+			    dataType: 'json',
+			    success: function (data) {
+			      menu.favs = data.favorites;
+				  menu.getFavourites();
 			    }
 		  });
 		},
@@ -145,6 +166,24 @@ $(function() {
 	}
 
 	let menu = {
+		favs: null,
+		getFavourites: function(){
+			$('.favorites').html('');
+			menu.favs.forEach(function(fav, i, arr){
+				let img = fav.backdrop_path ? fav.backdrop_path : fav.poster_path
+				$('.favorites').prepend(`
+					<div class="fav-item"  style="background-image: url(https://image.tmdb.org/t/p/w500/` + img + `)">
+	                    <div class="fav-item__title">`+ fav.title + `</div>
+	                    <div class="fav-item__genre">Фантастика</div>
+	                    <div class="fav-item__icon" id="remove-fav" data-id="`+ fav.id +`">
+	                        <svg >
+	                            <use xlink:href="/static/img/sprite.svg#fav"></use>
+	                        </svg>
+	                    </div>
+	                </div>
+					`);
+			});
+		},
 		open: function(){
 			$('body').addClass('opened-menu');
 		},
@@ -161,6 +200,7 @@ $(function() {
 				$('.login-ok').removeClass('show');
 			}, 500);
 		},
+
 		auth: {
 			signup: function(){
 					let form_data = $('#signup-form').serialize();
@@ -174,6 +214,8 @@ $(function() {
 						success: function (data) {
 							if(data.login){
   							  menu.showUser();
+							  menu.favs = data.favorites;
+							  menu.getFavourites();
   						  }
 						}
 				  });
@@ -191,6 +233,8 @@ $(function() {
 						success: function (data) {
 						  if(data.login){
 							  menu.showUser();
+							  menu.favs = data.favorites;
+							  menu.getFavourites();
 						  }
 						}
 				  });
@@ -259,7 +303,11 @@ $(function() {
 	$('#login-btn').on('click', function(){
 		menu.auth.login();
 	});
-
+	$(document).on('click', '#remove-fav', function () {
+		alert(300);
+		let id = $(this).attr('data-id');
+		film.removeFav(id, 'movie');
+	});
 	$('#show-login').on('click', function(){
 		menu.auth.showLogin();
 	});
