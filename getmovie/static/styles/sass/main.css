@@ -144,16 +144,16 @@ body {
   body.--generated-film .content {
     display: block;
     height: calc(100% - 90px); }
-  body.opened-menu header.header {
+  body.opened-menu .header {
     border-top-left-radius: 35px; }
   body.opened-menu .main-menu {
-    width: 450px; }
+    transform: translateX(0px); }
   body.opened-menu .generated-film {
     border-bottom-left-radius: 35px; }
   body.opened-menu .wrapper {
     border-top-left-radius: 35px;
     border-bottom-left-radius: 35px;
-    width: calc(100% - 450px); }
+    transform: translateX(450px); }
     body.opened-menu .wrapper header.header .h__menu {
       height: 20px;
       width: 20px; }
@@ -225,14 +225,61 @@ body {
   align-items: center; }
 
 .main-menu {
-  width: 0;
+  transform: translateX(-450px);
   height: 100vh;
   background-color: #fff;
-  transition: all .35s ease;
+  transition: all .15s ease;
+  width: 450px;
   overflow: hidden;
   position: fixed;
   left: 0;
   top: 0; }
+  .main-menu .ttl {
+    padding-left: 35px;
+    padding-right: 35px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #353439;
+    margin-top: 32px; }
+  .main-menu__header {
+    display: flex;
+    padding-top: 35px;
+    padding-left: 35px;
+    padding-right: 35px;
+    align-items: center;
+    justify-content: space-between; }
+    .main-menu__header .user-profile {
+      position: relative;
+      width: 50px;
+      height: 50px;
+      cursor: pointer; }
+      .main-menu__header .user-profile .user-img {
+        width: 50px;
+        border-radius: 50px;
+        height: 50px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 18px;
+        color: #fff;
+        background-color: #4F95FF; }
+      .main-menu__header .user-profile .notify {
+        position: absolute;
+        width: 13px;
+        height: 13px;
+        box-sizing: border-box;
+        background-color: #FF4F79;
+        border: 2px solid #fff;
+        border-radius: 13px;
+        right: 0;
+        bottom: 0; }
+    .main-menu__header .search {
+      cursor: pointer; }
+      .main-menu__header .search svg {
+        fill: #353439;
+        width: 18px;
+        height: 18px; }
   .main-menu .login-ok {
     position: absolute;
     width: 100%;
@@ -373,7 +420,8 @@ body {
       opacity: 1; }
     .header .h__search svg {
       width: 18px;
-      height: 18px; }
+      height: 18px;
+      fill: #fff; }
 
 .generated-film {
   background-color: #1B1A28;

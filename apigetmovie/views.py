@@ -179,24 +179,15 @@ def get_favs(request):
 def get_list_favorite(username):
     userid = User.objects.get(username=username).id
     list_id = UserFav.objects.filter(userid=userid)
-    result = {}
+    result = []
     i = 1
 
     for id in list_id.all():
         type_ = Fav.objects.get(favid=id.get_favid()).get_type()
         film = RandomFilm(type_).get_film_for_id(id.get_favid())
 
-        res = {"id": id.get_favid(), "type": type_, "poster_path": film["poster_path"], "title": film["title"]}
-        result.update({str(i): res})
+        res = {"id": id.get_favid(), "type": type_, "poster_path": film["poster_path"], "title": film["title"], 'backdrop_path': film['backdrop_path']}
+        result.append(res)
         i +=1
     result = {"favorites": result, "username": username}
     return result
-
-
-
-
-
-
-
-
-

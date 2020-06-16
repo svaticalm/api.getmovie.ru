@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=1192, initial-scale=1">
     {% block title %}<title></title>{% endblock %}
     {% load sass_tags %}
     {% load static %}
@@ -16,7 +16,26 @@
             </svg>
         </div>
         <div class="user-info" id="user-info">
+            <div class="main-menu__header">
+                <div class="search">
+                    <svg>
+                        <use xlink:href="{% static 'img/sprite.svg' %}#search"></use>
+                    </svg>
+                </div>
+                <div class="user-profile">
+                    <div class="user-img">E</div>
+                    <div class="notify"></div>
+                </div>
+            </div>
+            <div class="ttl">Избранное</div>
+            <div class="favourites">
+                <div class="fav-item">
+                    <div class="fav-item__title">Первому игроку приготовиться</div>
+                    <div class="fav-item__genre">Фантастика</div>
+                </div>
+            </div>
             <div><a href="/logout" id="logout-btn">ВЫЙТИ</a></div>
+
         </div>
         <div id="auth" class="auth">
             <div class="auth-form --signup" id="signup">
