@@ -147,7 +147,7 @@ def remove_fav(request):
     if request.method == "POST":
 
         if not request.user.is_authenticated:
-            return HttpResponse(dumps({'fav_add': False, "authenticated": False}))
+            return HttpResponse(dumps({'fav_remove': False, "authenticated": False}))
 
         response_ajax = request.read().decode("UTF-8")
         id = QueryDict(response_ajax).get('filmId')
