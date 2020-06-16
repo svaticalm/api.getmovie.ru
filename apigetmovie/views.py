@@ -31,8 +31,7 @@ def index(request, id=-1):
             return HttpResponse(dumps({'error_api': 'Извините, но произошла неизвестная ошибка. Попробуйте еще раз'}))
 
         res.update({"error_api": ""})
-        credits_list = film.get_credits(id)
-        res.update({"credits": credits_list, })
+
         return HttpResponse(dumps(res))
 
     return render(request, 'index.html')
@@ -115,7 +114,7 @@ def get_user(request):
     return HttpResponse(dumps({'username': False}))
 
 
-def add_fav_id(request):
+def add_fav(request):
 
     if not request.user.is_authenticated:
         return HttpResponse(dumps({'fav_add': False, "authenticated": False}))
@@ -144,6 +143,27 @@ def add_fav_id(request):
     return HttpResponseRedirect('/')
 
 
+def remove_fav(request):
+    if request.method == "POST":
+
+        if not request.user.is_authenticated:
+            return HttpResponse(dumps({'fav_remove': False, "authenticated": False}))
+
+        response_ajax = request.read().decode("UTF-8")
+        id = QueryDict(response_ajax).get('filmId')
+        userid = User.objects.get(username=request.user.username).id
+        id_favorite_of_user = UserFav.objects.filter(favid=id, userid=userid)
+        exist_id_favorite_of_user = id_favorite_of_user.count()
+
+        if exist_id_favorite_of_user == 0:
+            HttpResponse(dumps({"error": "film not added to favorites list"}))
+
+        if id_favorite_of_user.delete():
+            return HttpResponse(dumps({"error": False}))
+
+    return HttpResponseRedirect('/')
+
+
 def get_favs(request):
 
     if not request.user.is_authenticated:
@@ -161,14 +181,14 @@ def get_list_favorite(username):
     list_id = UserFav.objects.filter(userid=userid)
     result = {}
     i = 1
-    for id in list_id:
-        print(id.get_favid())
+
+    for id in list_id.all():
         type_ = Fav.objects.get(favid=id.get_favid()).get_type()
-        print(type_)
         film = RandomFilm(type_).get_film_for_id(id.get_favid())
 
         res = {"id": id.get_favid(), "type": type_, "poster_path": film["poster_path"], "title": film["title"]}
         result.update({str(i): res})
+        i +=1
     result = {"favorites": result, "username": username}
     return result
 
