@@ -53,7 +53,10 @@ class RandomFilm:
 
         res = self.get_film_for_id(id)
         credits_list = self.get_credits(id)
-        res.update({"credits": credits_list, })
+        try:
+            res.update({"credits": credits_list, })
+        except AttributeError:
+            return False
 
         return res
 
