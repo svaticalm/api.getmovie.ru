@@ -144,15 +144,9 @@ body {
   body.--generated-film .content {
     display: block;
     height: calc(100% - 90px); }
-  body.opened-menu .header {
-    border-top-left-radius: 35px; }
   body.opened-menu .main-menu {
     transform: translateX(0px); }
-  body.opened-menu .generated-film {
-    border-bottom-left-radius: 35px; }
   body.opened-menu .wrapper {
-    border-top-left-radius: 35px;
-    border-bottom-left-radius: 35px;
     transform: translateX(450px); }
     body.opened-menu .wrapper header.header .h__menu {
       height: 20px;
@@ -232,8 +226,73 @@ body {
   width: 450px;
   overflow: hidden;
   position: fixed;
+  overflow-y: auto;
   left: 0;
   top: 0; }
+  .main-menu .favorites {
+    padding-left: 35px;
+    padding-right: 35px;
+    margin-top: 12px;
+    overflow-y: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; }
+    .main-menu .favorites .fav-item {
+      border-radius: 35px;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+      height: 200px;
+      cursor: pointer;
+      margin-top: 20px; }
+      .main-menu .favorites .fav-item:nth-child(6n+1) {
+        width: 55%; }
+      .main-menu .favorites .fav-item:nth-child(6n+2) {
+        width: 40%; }
+      .main-menu .favorites .fav-item:nth-child(3n+3) {
+        width: 100%; }
+      .main-menu .favorites .fav-item:nth-child(6n+4) {
+        width: 40%; }
+      .main-menu .favorites .fav-item:nth-child(6n+5) {
+        width: 55%; }
+      .main-menu .favorites .fav-item__icon {
+        position: absolute;
+        bottom: 26px;
+        right: 20px;
+        height: 13px;
+        cursor: pointer;
+        z-index: 1; }
+        .main-menu .favorites .fav-item__icon svg {
+          width: 17px;
+          height: 13px;
+          fill: #FF3062; }
+      .main-menu .favorites .fav-item:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.45);
+        height: 100%;
+        top: 0;
+        left: 0; }
+      .main-menu .favorites .fav-item__genre {
+        color: #00CFFF;
+        font-size: 10px;
+        position: absolute;
+        bottom: 27px;
+        left: 20px;
+        z-index: 1; }
+      .main-menu .favorites .fav-item__title {
+        color: #fff;
+        font-weight: bold;
+        position: absolute;
+        font-weight: 14px;
+        line-height: 17px;
+        z-index: 1;
+        padding-right: 15px;
+        bottom: 45px;
+        left: 20px; }
   .main-menu .ttl {
     padding-left: 35px;
     padding-right: 35px;
@@ -247,6 +306,8 @@ body {
     padding-left: 35px;
     padding-right: 35px;
     align-items: center;
+    background-color: #fff;
+    z-index: 10;
     justify-content: space-between; }
     .main-menu__header .user-profile {
       position: relative;

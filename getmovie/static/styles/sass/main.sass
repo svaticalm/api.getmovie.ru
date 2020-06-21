@@ -109,15 +109,9 @@ body
             display: block
             height: calc(100% - 90px)
     &.opened-menu
-        .header
-            border-top-left-radius: 35px
         .main-menu
             transform: translateX(0px)
-        .generated-film
-            border-bottom-left-radius: 35px
         .wrapper
-            border-top-left-radius: 35px
-            border-bottom-left-radius: 35px
             transform: translateX(450px)
             header.header
                 .h__menu
@@ -199,8 +193,81 @@ body
     width: 450px
     overflow: hidden
     position: fixed
+    overflow-y: auto
     left: 0
     top: 0
+    .favorites
+        padding-left: 35px
+        padding-right: 35px
+        margin-top: 12px
+        overflow-y: auto
+        display: flex
+        justify-content: space-between
+        flex-wrap: wrap
+        .fav-item
+            border-radius: 35px
+            overflow: hidden
+            position: relative
+            width: 100%
+            background-size: cover
+            background-position: center
+            height: 200px
+            cursor: pointer
+            margin-top: 20px
+            &:nth-child(6n+1)
+                width: 55%
+            &:nth-child(6n+2)
+                width: 40%
+            &:nth-child(3n+3)
+                width: 100%
+            &:nth-child(6n+4)
+                width: 40%
+            &:nth-child(6n+5)
+                width: 55%
+            // &:nth-child(2n+1)
+            //     width: 55%
+            // &:nth-child(2n+2)
+            //     width: 40%
+            // &:nth-child(2n+3)
+            //     width: 100%
+            // &:nth-child(3n+5)
+            //     width: 55%
+            &__icon
+                position: absolute
+                bottom: 26px
+                right: 20px
+                height: 13px
+                cursor: pointer
+                z-index: 1
+                svg
+                    width: 17px
+                    height: 13px
+                    fill: #FF3062
+            &:after
+                content: ''
+                position: absolute
+                width: 100%
+                background-color: rgba(#000, 0.45)
+                height: 100%
+                top: 0
+                left: 0
+            &__genre
+                color: #00CFFF
+                font-size: 10px
+                position: absolute
+                bottom: 27px
+                left: 20px
+                z-index: 1
+            &__title
+                color: #fff
+                font-weight: bold
+                position: absolute
+                font-weight: 14px
+                line-height: 17px
+                z-index: 1
+                padding-right: 15px
+                bottom: 45px
+                left: 20px
     .ttl
         padding-left: 35px
         padding-right: 35px
@@ -214,6 +281,8 @@ body
         padding-left: 35px
         padding-right: 35px
         align-items: center
+        background-color: #fff
+        z-index: 10
         justify-content: space-between
         .user-profile
             position: relative

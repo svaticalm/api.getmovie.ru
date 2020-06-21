@@ -28,10 +28,15 @@
                 </div>
             </div>
             <div class="ttl">Избранное</div>
-            <div class="favourites">
+            <div class="favorites">
                 <div class="fav-item">
                     <div class="fav-item__title">Первому игроку приготовиться</div>
                     <div class="fav-item__genre">Фантастика</div>
+                    <div class="fav-item__icon">
+                        <svg >
+                            <use xlink:href="{% static 'img/sprite.svg' %}#fav"></use>
+                        </svg>
+                    </div>
                 </div>
             </div>
             <div><a href="/logout" id="logout-btn">ВЫЙТИ</a></div>
