@@ -96,5 +96,3 @@ class RandomFilm:
         movie_descriptions = film
 
         return movie_descriptions['id']
-
-

@@ -101,7 +101,7 @@ $(function() {
 			$('#generated-film, #header').addClass('scale07');
 		},
 
-		addToFav: function(id, type){
+		addToFav: function(currentFilm, type){
 			$.ajax({
 			    type: "POST",
 			    url: '/add-fav',
@@ -109,13 +109,15 @@ $(function() {
 			    },
 			    data: {
 			      'csrfmiddlewaretoken': getCookie("csrftoken"),
-				  'filmId': id,
+				  'filmId': currentFilm.id,
 				  'type': type,
 			    },
 			    dataType: 'json',
 			    success: function (data) {
 			      menu.favs = data.favorites;
-				  menu.getFavourites();
+				  if(data.fav_add){
+					  menu.addFav(currentFilm);
+				  }
 			    }
 		  });
 		},
@@ -167,18 +169,36 @@ $(function() {
 
 	let menu = {
 		favs: null,
+		addFav: function(currentFilm){
+			let img = currentFilm.backdrop_path ? currentFilm.backdrop_path : currentFilm.poster_path
+			$('.favorites').prepend(`
+					<div class="fav-item"  style="background-image: url(https://image.tmdb.org/t/p/w500/` + img + `)">
+						<a href="/movie/` + currentFilm.id + `"></a>
+						<div class="fav-item__title">`+ currentFilm.title + `</div>
+						<div class="fav-item__genre">` + currentFilm.genres[0].name + `</div>
+						<div class="fav-item__icon" id="remove-fav" data-id="`+ currentFilm.id +`">
+							<svg class="heart">
+								<use xlink:href="/static/img/sprite.svg#fav"></use>
+							</svg>
+							<div class="minus"></div>
+						</div>
+					</div>
+				`);
+		},
 		getFavourites: function(){
 			$('.favorites').html('');
 			menu.favs.forEach(function(fav, i, arr){
-				let img = fav.backdrop_path ? fav.backdrop_path : fav.poster_path
+				let img = fav.backdrop_path ? fav.backdrop_path : fav.poster_path;
 				$('.favorites').prepend(`
 					<div class="fav-item"  style="background-image: url(https://image.tmdb.org/t/p/w500/` + img + `)">
+						<a href="/movie/` + fav.id + `"></a>
 	                    <div class="fav-item__title">`+ fav.title + `</div>
-	                    <div class="fav-item__genre">Фантастика</div>
+	                    <div class="fav-item__genre">` + fav.genres[0].name + `</div>
 	                    <div class="fav-item__icon" id="remove-fav" data-id="`+ fav.id +`">
-	                        <svg >
+	                        <svg class="heart">
 	                            <use xlink:href="/static/img/sprite.svg#fav"></use>
 	                        </svg>
+							<div class="minus"></div>
 	                    </div>
 	                </div>
 					`);
@@ -212,6 +232,22 @@ $(function() {
 						data: form_data,
 						dataType: 'json',
 						success: function (data) {
+							if(data.errors){
+								switch(data.errors[0].input){
+									case 'email':
+										$('#signup-form input[name="email"]').parent().find('.inp__error-text').html(data.errors[0].text);
+										$('#signup-form input[name="email"]').parent().addClass('error');
+										break;
+									case 'username':
+										$('#signup-form input[name="username"]').parent().find('.inp__error-text').html(data.errors[0].text);
+										$('#signup-form input[name="username"]').parent().addClass('error');
+										break;
+									case 'password':
+										$('#signup-form input[type="password"]').parent().find('.inp__error-text').html(data.errors[0].text);
+										$('#signup-form input[type="password"]').parent().addClass('error');
+										break;
+								}
+							}
 							if(data.login){
   							  menu.showUser();
 							  menu.favs = data.favorites;
@@ -235,6 +271,9 @@ $(function() {
 							  menu.showUser();
 							  menu.favs = data.favorites;
 							  menu.getFavourites();
+						  }else{
+							  $('#login-form input').parent().find('.inp__error-text').html('Неверный логин или пароль');
+							  $('#login-form input').parent().addClass('error');
 						  }
 						}
 				  });
@@ -295,7 +334,7 @@ $(function() {
 		film.generate(true, '/', film.currentType);
 	});
 	$('#add-to-fav').on('click', function(){
-		film.addToFav(film.currentFilm.id, film.currentType);
+		film.addToFav(film.currentFilm, film.currentType);
 	});
 	$('#signup-btn').on('click', function(){
 		menu.auth.signup();
@@ -304,7 +343,6 @@ $(function() {
 		menu.auth.login();
 	});
 	$(document).on('click', '#remove-fav', function () {
-		alert(300);
 		let id = $(this).attr('data-id');
 		film.removeFav(id, 'movie');
 	});
@@ -315,6 +353,9 @@ $(function() {
 		menu.auth.showSignup();
 	});
 	// Работа кнопок END
+	$('input').on('focus', function(){
+		$(this).parent().removeClass('error');
+	});
 
 	// AJAX ЗАПРОС на рандомный фильм без фильтров
 	$('#get-film').on("submit", function(){
