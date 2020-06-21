@@ -70,7 +70,6 @@ def signup(request):
         result.update({'login': True, 'signup': True})
         return HttpResponse(dumps(result))
 
-
     return HttpResponseRedirect('/')
 
 
