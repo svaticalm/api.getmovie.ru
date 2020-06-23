@@ -68,6 +68,11 @@ class RandomFilm:
 
         video_trailer = self.get_addinf(str(id), self.url_api_video)
         detail.update({"video_trailer": video_trailer})
+        credits_list = self.get_credits(id)
+        try:
+            detail.update({"credits": credits_list, })
+        except AttributeError:
+            return False
         result = detail
         print(detail)
 

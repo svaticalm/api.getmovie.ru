@@ -38,6 +38,7 @@ $(function() {
 		popularity: $('.generated-film__info--detail .ratings .rating .top'),
 		backdrop: $('.generated-film__backdrop'),
 		video: $('.generated-film__video iframe'),
+		cast: $('.generated-film__cast'),
 		currentFilm: null,
 		currentType: 'movie',
 
@@ -83,6 +84,24 @@ $(function() {
 				film.video.attr("src", "");
 			}
 
+			film.cast.html('');
+			if(data.credits){
+				data.credits.cast.forEach(function(actor, i, arr){
+					let img = actor.profile_path ? actor.profile_path : null;
+					let nophoto = img == null ? 'nophoto' : '';
+					film.cast.append(`
+						<div class="cast-item">
+			                <div class="img ` + nophoto +`" style="background-image: url(https://image.tmdb.org/t/p/w500/` + img + `">
+								<svg>
+				                    <use xlink:href="/static/img/sprite.svg#no-photo"></use>
+				                </svg>
+							</div>
+			                <div class="actor-name">`+ actor.name +`</div>
+			                <div class="character-name">` + actor.character + `</div>
+			            </div>
+						`);
+				});
+			}
 
 			setTimeout(function(){
 				$('.h__update').addClass('h__update--show');
