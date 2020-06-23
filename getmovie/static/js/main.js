@@ -16,7 +16,7 @@ $(function() {
 			    dataType: 'json',
 			    success: function (data) {
 			      if(data.username){
-					   menu.showUser();
+					   menu.showUser(data.username);
 					   menu.favs = data.favorites;
 	 				   menu.getFavourites();
 				  }
@@ -190,6 +190,7 @@ $(function() {
 		favs: null,
 		addFav: function(currentFilm){
 			let img = currentFilm.backdrop_path ? currentFilm.backdrop_path : currentFilm.poster_path
+			$('#favs-empty').removeClass('show');
 			$('.favorites').prepend(`
 					<div class="fav-item"  style="background-image: url(https://image.tmdb.org/t/p/w500/` + img + `)">
 						<a href="/movie/` + currentFilm.id + `"></a>
@@ -206,22 +207,27 @@ $(function() {
 		},
 		getFavourites: function(){
 			$('.favorites').html('');
-			menu.favs.forEach(function(fav, i, arr){
-				let img = fav.backdrop_path ? fav.backdrop_path : fav.poster_path;
-				$('.favorites').prepend(`
-					<div class="fav-item"  style="background-image: url(https://image.tmdb.org/t/p/w500/` + img + `)">
-						<a href="/movie/` + fav.id + `"></a>
-	                    <div class="fav-item__title">`+ fav.title + `</div>
-	                    <div class="fav-item__genre">` + fav.genres[0].name + `</div>
-	                    <div class="fav-item__icon" id="remove-fav" data-id="`+ fav.id +`">
-	                        <svg class="heart">
-	                            <use xlink:href="/static/img/sprite.svg#fav"></use>
-	                        </svg>
-							<div class="minus"></div>
-	                    </div>
-	                </div>
-					`);
-			});
+			if(menu.favs.length > 0){
+				$('#favs-empty').removeClass('show');
+				menu.favs.forEach(function(fav, i, arr){
+					let img = fav.backdrop_path ? fav.backdrop_path : fav.poster_path;
+					$('.favorites').prepend(`
+						<div class="fav-item"  style="background-image: url(https://image.tmdb.org/t/p/w500/` + img + `)">
+							<a href="/movie/` + fav.id + `"></a>
+		                    <div class="fav-item__title">`+ fav.title + `</div>
+		                    <div class="fav-item__genre">` + fav.genres[0].name + `</div>
+		                    <div class="fav-item__icon" id="remove-fav" data-id="`+ fav.id +`">
+		                        <svg class="heart">
+		                            <use xlink:href="/static/img/sprite.svg#fav"></use>
+		                        </svg>
+								<div class="minus"></div>
+		                    </div>
+		                </div>
+						`);
+				});
+			}else{
+				$('#favs-empty').addClass('show');
+			}
 		},
 		open: function(){
 			$('body').addClass('opened-menu');
@@ -229,8 +235,9 @@ $(function() {
 		close: function(){
 			$('body').removeClass('opened-menu');
 		},
-		showUser: function(){
+		showUser: function(name){
 			$('.login-ok').addClass('show');
+			$('.user-img').html(name.split('')[0]);
 			setTimeout(() => {
 				$('#auth').hide();
 				$('#user-info').show();
@@ -241,6 +248,24 @@ $(function() {
 		},
 
 		auth: {
+			signupValidate: function(){
+			   let regEmail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+			   let address = $('#signup-form input[name="email"]').val();
+			   if(regEmail.test(address) == false) {
+				   $('#signup-form input[name="email"]').parent().find('.inp__error-text').html('Введите корректный e-mail');
+				   $('#signup-form input[name="email"]').parent().addClass('error');
+			      return false;
+			   }
+
+			   let regUsername = /^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
+			   let username = $('#signup-form input[name="username"]').val();
+			   if(regUsername.test(username) == false) {
+				   $('#signup-form input[name="username"]').parent().find('.inp__error-text').html('Логин введён некорректно');
+				   $('#signup-form input[name="username"]').parent().addClass('error');
+			      return false;
+			   }
+			  return true;
+			},
 			signup: function(){
 					let form_data = $('#signup-form').serialize();
 					$.ajax({
@@ -268,7 +293,7 @@ $(function() {
 								}
 							}
 							if(data.login){
-  							  menu.showUser();
+  							  menu.showUser(data.username);
 							  menu.favs = data.favorites;
 							  menu.getFavourites();
   						  }
@@ -287,7 +312,7 @@ $(function() {
 						dataType: 'json',
 						success: function (data) {
 						  if(data.login){
-							  menu.showUser();
+							  menu.showUser(data.username);
 							  menu.favs = data.favorites;
 							  menu.getFavourites();
 						  }else{
@@ -354,9 +379,18 @@ $(function() {
 	});
 	$('#add-to-fav').on('click', function(){
 		film.addToFav(film.currentFilm, film.currentType);
+		$(this).hide();
+		$('#remove-from-fav').show();
+	});
+	$('#remove-from-fav').on('click', function(){
+		film.removeFav(film.currentFilm.id, 'movie');
+		$(this).hide();
+		$('#add-to-fav').show();
 	});
 	$('#signup-btn').on('click', function(){
-		menu.auth.signup();
+		if(menu.auth.signupValidate()){
+			menu.auth.signup();
+		}
 	});
 	$('#login-btn').on('click', function(){
 		menu.auth.login();

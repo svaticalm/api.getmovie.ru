@@ -163,6 +163,9 @@ body, html {
   transform: scale(0.7);
   pointer-events: none; }
 
+#remove-from-fav {
+  display: none; }
+
 body {
   background-color: #fff;
   color: #fff;
@@ -254,7 +257,7 @@ body {
   align-items: center; }
 
 .main-menu {
-  transform: translateX(-450px);
+  transform: translateX(-452px);
   height: 100vh;
   background-color: #fff;
   transition: all .15s ease;
@@ -389,6 +392,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
+        text-transform: uppercase;
         font-size: 18px;
         color: #fff;
         background-color: #4F95FF; }
@@ -402,9 +406,10 @@ body {
         border-radius: 13px;
         right: 0;
         bottom: 0; }
-    .main-menu__header .search {
-      cursor: pointer; }
-      .main-menu__header .search svg {
+    .main-menu__header .logout {
+      cursor: pointer;
+      display: block; }
+      .main-menu__header .logout svg {
         fill: #353439;
         width: 18px;
         height: 18px; }
@@ -430,6 +435,22 @@ body {
       height: 32px; }
   .main-menu .user-info {
     display: none; }
+  .main-menu .nothing {
+    text-align: center;
+    color: rgba(53, 52, 57, 0.3);
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 29px;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 64px;
+    display: none; }
+    .main-menu .nothing.show {
+      display: flex; }
+    .main-menu .nothing svg {
+      width: 135px;
+      height: 135px;
+      margin-bottom: 24px; }
   .main-menu .auth {
     height: 100%; }
   .main-menu .auth-form {
@@ -626,7 +647,7 @@ body {
     max-width: 1500px;
     margin: 0 auto;
     font-size: 18px;
-    line-height: 28px; }
+    line-height: 30px; }
   .generated-film__cast {
     padding-left: 460px;
     max-width: 1500px;
@@ -637,10 +658,8 @@ body {
     padding-bottom: 150px; }
     .generated-film__cast .cast-item {
       width: 160px;
-      margin-right: 30px;
+      margin-right: 24px;
       margin-bottom: 20px; }
-      .generated-film__cast .cast-item:nth-child(5n) {
-        margin-right: 0 !important; }
       .generated-film__cast .cast-item .img {
         width: 160px;
         background-color: #302B4A;
