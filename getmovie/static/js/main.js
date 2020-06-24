@@ -219,7 +219,8 @@ $(function() {
   						  }
 						}
 				  });
-			},
+			},d
+
 			login: function(){
 					let form_data = $('#login-form').serialize();
 					form_data.csrfmiddlewaretoken = $( "#login-form input[name='csrfmiddlewaretoken']" ).val();
