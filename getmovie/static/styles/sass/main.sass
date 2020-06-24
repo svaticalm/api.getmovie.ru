@@ -5,6 +5,7 @@ $violet: #352388
 $violet-light: #452EB4
 $dark: #353439
 $green: #3DCA6D
+$red: #FF5656
 
 *
     box-sizing: border-box
@@ -25,8 +26,40 @@ button
     -webkit-user-select: none
     -moz-user-select: none
     -ms-user-select: none
+@keyframes anim-inp-error
+	0%
+		border-color: rgba($dark, 0.2)
+	33%
+		border-color: $red
+	66%
+		border-color: rgba($dark, 0.2)
+	100%
+		border-color: $red
+@keyframes anim-text-error
+	0%
+		opacity: 0
+	33%
+		opacity: 1
+	66%
+		opacity: 0
+	100%
+		opacity: 1
 .inp
     width: 300px
+    position: relative
+    &__error-text
+        opacity: 0
+        font-size: 9px
+        color: $red
+        position: absolute
+        bottom: -13px
+        left: 0
+        text-transform: none
+    &.error
+        .inp__error-text
+            animation: anim-text-error 0.7s ease forwards
+        input
+            animation: anim-inp-error 0.7s ease forwards
     input
         height: 48px
         width: 100%
@@ -35,6 +68,8 @@ button
         border-bottom: 2px solid rgba($dark, 0.2)
         font-size: 18px
         transition: all .15s ease
+        &::placeholder
+            color: rgba($dark, 0.45)
         &:focus
             border-color: $violet-light
 .mt32
@@ -91,6 +126,8 @@ body,html
 .scale07
     transform: scale(0.7)
     pointer-events: none
+#remove-from-fav
+    display: none
 body
     background-color: #fff
     color: #fff
@@ -186,7 +223,7 @@ body
     justify-content: center
     align-items: center
 .main-menu
-    transform: translateX(-450px)
+    transform: translateX(-452px)
     height: 100vh
     background-color: #fff
     transition: all .15s ease
@@ -205,15 +242,23 @@ body
         justify-content: space-between
         flex-wrap: wrap
         .fav-item
-            border-radius: 35px
+            border-radius: 25px
             overflow: hidden
             position: relative
             width: 100%
             background-size: cover
             background-position: center
-            height: 200px
+            height: 180px
             cursor: pointer
             margin-top: 20px
+            a
+                display: block
+                position: absolute
+                width: 100%
+                height: 100%
+                z-index: 1
+                top: 0
+                left: 0
             &:nth-child(6n+1)
                 width: 55%
             &:nth-child(6n+2)
@@ -224,25 +269,41 @@ body
                 width: 40%
             &:nth-child(6n+5)
                 width: 55%
-            // &:nth-child(2n+1)
-            //     width: 55%
-            // &:nth-child(2n+2)
-            //     width: 40%
-            // &:nth-child(2n+3)
-            //     width: 100%
-            // &:nth-child(3n+5)
-            //     width: 55%
             &__icon
                 position: absolute
                 bottom: 26px
-                right: 20px
+                right: 15px
                 height: 13px
                 cursor: pointer
-                z-index: 1
-                svg
+                z-index: 2
+                transition: all .15s ease
+                &:hover
+                    .minus
+                        opacity: 1
+                .heart
                     width: 17px
-                    height: 13px
+                    height: 15px
                     fill: #FF3062
+                .minus
+                    width: 11px
+                    height: 11px
+                    border-radius: 10px
+                    position: absolute
+                    bottom: -2px
+                    right: 0px
+                    background-color: #fff
+                    border: 1px solid #ff3062
+                    opacity: 0
+                    transition: all .15s ease
+                    &:after
+                        content: ''
+                        position: absolute
+                        top: 4px
+                        left: 2px
+                        width: 5px
+                        height: 1px
+                        background-color: #ff3062
+                        display: block
             &:after
                 content: ''
                 position: absolute
@@ -256,18 +317,19 @@ body
                 font-size: 10px
                 position: absolute
                 bottom: 27px
-                left: 20px
+                left: 15px
                 z-index: 1
+                text-transform: capitalize
             &__title
                 color: #fff
                 font-weight: bold
                 position: absolute
-                font-weight: 14px
+                font-size: 14px
                 line-height: 17px
                 z-index: 1
-                padding-right: 15px
+                padding-right: 10px
                 bottom: 45px
-                left: 20px
+                left: 15px
     .ttl
         padding-left: 35px
         padding-right: 35px
@@ -297,6 +359,7 @@ body
                 display: flex
                 justify-content: center
                 align-items: center
+                text-transform: uppercase
                 font-size: 18px
                 color: #fff
                 background-color: #4F95FF
@@ -310,8 +373,9 @@ body
                 border-radius: 13px
                 right: 0
                 bottom: 0
-        .search
+        .logout
             cursor: pointer
+            display: block
             svg
                 fill: $dark
                 width: 18px
@@ -338,6 +402,22 @@ body
             height: 32px
     .user-info
         display: none
+    .nothing
+        text-align: center
+        color: rgba($dark, 0.3)
+        font-weight: bold
+        font-size: 24px
+        line-height: 29px
+        flex-direction: column
+        align-items: center
+        margin-top: 64px
+        display: none
+        &.show
+            display: flex
+        svg
+            width: 135px
+            height: 135px
+            margin-bottom: 24px
     .auth
         height: 100%
     .auth-form
@@ -472,7 +552,7 @@ body
         padding-left: 460px
         max-width: 1500px
         margin: 0 auto
-        margin-top: 32px
+        margin-top: 40px
         margin-bottom: 16px
     &__backdrop
         height: 500px
@@ -533,8 +613,44 @@ body
         max-width: 1500px
         margin: 0 auto
         font-size: 18px
-        line-height: 28px
-        padding-bottom: 32px
+        line-height: 30px
+    &__cast
+        padding-left: 460px
+        max-width: 1500px
+        padding-right: 120px
+        margin: 0 auto
+        display: flex
+        flex-wrap: wrap
+        padding-bottom: 150px
+        .cast-item
+            width: 160px
+            margin-right: 24px
+            margin-bottom: 20px
+            .img
+                width: 160px
+                background-color: #302B4A
+                height: 200px
+                margin-bottom: 8px
+                background-size: cover
+                background-repeat: no-repeat
+                background-position: top
+                display: flex
+                justify-content: center
+                align-items: center
+                svg
+                    display: none
+                &.nophoto
+                    svg
+                        display: block
+                        width: 55px
+                        height: 55px
+                        fill: #56507A
+            .actor-name
+                font-weight: bold
+                margin-bottom: 4px
+            .character-name
+                color: rgba(#fff, 0.5)
+                font-size: 12px
     &__info
         display: flex
         position: relative

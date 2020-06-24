@@ -38,7 +38,7 @@ def signup(request):
         return HttpResponseRedirect('/')
 
     if request.method == 'POST':
-        errors = {}
+        errors = []
         response_ajax = parse_qs(request.read().decode("UTF-8"))
         username = response_ajax['username'][0]
         email = response_ajax['email'][0]
@@ -47,15 +47,15 @@ def signup(request):
 
         exist_email = User.objects.filter(email=email).count()
         if exist_email > 0:
-            errors.update({'signup_error_email': 'данный email уже используется',})
+            errors.append({'input': 'email','text': 'Данный email уже используется'})
 
         exist_username = User.objects.filter(username=username).count()
 
         if exist_username > 0:
-            errors.update({'signup_error_username': 'пользователь с таким именем уже существует',})
+            errors.append({'input': 'username','text': 'Пользователь с таким именем уже существует'})
 
         if password != password_repeat:
-            errors.update({'signup_error_password': 'пароли не совпадают'})
+            errors.append({'input': 'password','text': 'Пароли не совпадают'})
 
         if errors != {}:
             res = dumps({'signup': False, 'errors': errors})
@@ -183,7 +183,7 @@ def get_list_favorite(username):
         type_ = Fav.objects.get(favid=id.get_favid()).get_type()
         film = RandomFilm(type_).get_film_for_id(id.get_favid())
 
-        res = {"id": id.get_favid(), "type": type_, "poster_path": film["poster_path"], "title": film["title"], 'backdrop_path': film['backdrop_path']}
+        res = {"id": id.get_favid(), "type": type_, "poster_path": film["poster_path"], "title": film["title"], 'backdrop_path': film['backdrop_path'], 'genres': film['genres']}
         result.append(res)
         i +=1
     result = {"favorites": result, "username": username}

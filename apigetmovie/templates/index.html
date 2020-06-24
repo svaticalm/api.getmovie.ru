@@ -69,13 +69,23 @@
                         Добавить в избранное
                     </div>
                 </button>
+                <button class="btn btn--green mt32" id="remove-from-fav">
+                    <div class="text">
+                        Удалить из избранного
+                    </div>
+                </button>
             </div>
         </div>
         <div class="block-ttl">Описание</div>
-        <div class="generated-film__overview">
-
+        <div class="generated-film__overview"></div>
+        <div class="block-ttl">Каст</div>
+        <div class="generated-film__cast">
+            <div class="cast-item">
+                <div class="img"></div>
+                <div class="actor-name">Ben Afflek</div>
+                <div class="character-name">Bob Rodgrigez</div>
+            </div>
         </div>
-
     </div>
     <p style="display: none">
         {% if user.is_authenticated  %}<a href="">{{ user.username }}</a>

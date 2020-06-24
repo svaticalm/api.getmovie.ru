@@ -17,17 +17,23 @@
         </div>
         <div class="user-info" id="user-info">
             <div class="main-menu__header">
-                <div class="search">
+                <a class="logout" href="/logout">
                     <svg>
-                        <use xlink:href="{% static 'img/sprite.svg' %}#search"></use>
+                        <use xlink:href="{% static 'img/sprite.svg' %}#logout"></use>
                     </svg>
-                </div>
+                </a>
                 <div class="user-profile">
                     <div class="user-img">E</div>
                     <div class="notify"></div>
                 </div>
             </div>
             <div class="ttl">Избранное</div>
+            <div class="nothing" id="favs-empty">
+                <svg>
+                    <use xlink:href="{% static 'img/sprite.svg' %}#box"></use>
+                </svg>
+                <span>У вас пока нет избранных фильмов...</span>
+            </div>
             <div class="favorites">
                 <div class="fav-item">
                     <div class="fav-item__title">Первому игроку приготовиться</div>
@@ -39,7 +45,6 @@
                     </div>
                 </div>
             </div>
-            <div><a href="/logout" id="logout-btn">ВЫЙТИ</a></div>
 
         </div>
         <div id="auth" class="auth">
@@ -49,15 +54,23 @@
                     {% csrf_token %}
                     <div class="inp">
                         <input type="text" name="email" placeholder="Почта">
+                        <div class="inp__error-text">
+                        </div>
                     </div>
                     <div class="inp mt16">
                         <input type="text" name="username" placeholder="Логин">
+                        <div class="inp__error-text">
+                        </div>
                     </div>
                     <div class="inp mt16">
                         <input type="password" name="password" placeholder="Пароль">
+                        <div class="inp__error-text">
+                        </div>
                     </div>
                     <div class="inp mt16">
                         <input type="password" name="password-repeat" placeholder="Повторите пароль">
+                        <div class="inp__error-text">
+                        </div>
                     </div>
                 </form>
                 <div class="mt32 submit-button">
@@ -75,9 +88,13 @@
                     {% csrf_token %}
                     <div class="inp">
                         <input type="text" name="username" placeholder="Логин">
+                        <div class="inp__error-text">
+                        </div>
                     </div>
                     <div class="inp mt16">
                         <input type="password" name="password" placeholder="Пароль">
+                        <div class="inp__error-text">
+                        </div>
                     </div>
                 </form>
                 <div class="mt32 submit-button">
