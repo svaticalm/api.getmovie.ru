@@ -13,11 +13,11 @@ from urllib.parse import parse_qs
 def index(request, id=-1):
     if request.method == 'POST':
         response_ajax = request.read().decode("UTF-8")
-        type_of_request = QueryDict(response_ajax).get('random')
+        type_request = QueryDict(response_ajax).get('random')
         type_ = QueryDict(response_ajax).get('type')
         film = RandomFilm(type_)
 
-        if type_of_request == 'false':
+        if type_request == 'false':
             res = film.get_film_for_id(id)
 
         else:
@@ -25,6 +25,17 @@ def index(request, id=-1):
 
         if res is False:
             return HttpResponse(dumps({'error_api': 'Извините, но произошла неизвестная ошибка. Попробуйте еще раз'}))
+
+        # проверяем есть ли фильм в избранном
+        if request.user.is_authenticated:
+            if type_request != "false":
+                id = res['id']
+
+            userid = User.objects.get(username=request.user.username).id
+            if UserFav.objects.filter(userid=userid, favid=id).count() == 0:
+                res.update({"is_favorite": False})
+            else:
+                res.update({"is_favorite": True})
 
         res.update({"error_api": ""})
 
@@ -57,7 +68,7 @@ def signup(request):
         if password != password_repeat:
             errors.append({'input': 'password','text': 'Пароли не совпадают'})
 
-        if errors != {}:
+        if errors != []:
             res = dumps({'signup': False, 'errors': errors})
             return HttpResponse(res)
 
