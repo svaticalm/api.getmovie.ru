@@ -44,6 +44,13 @@ button
 		opacity: 0
 	100%
 		opacity: 1
+@keyframes anim-opacity
+    0%
+        opacity: 0
+        transform: scale(0.8)
+    100%
+        opacity: 1
+        transform: scale(1.0)
 .inp
     width: 300px
     position: relative
@@ -260,6 +267,7 @@ body
             height: 180px
             cursor: pointer
             margin-top: 20px
+            animation: anim-opacity 0.4s forwards
             &:hover
                 &:after
                     background-color: rgba(#000, 0.35)

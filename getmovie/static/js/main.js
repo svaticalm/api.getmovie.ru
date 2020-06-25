@@ -133,6 +133,7 @@ $(function() {
 			    type: "POST",
 			    url: '/add-fav',
 				beforeSend: function(){
+					$('#add-to-fav').addClass('loading');
 			    },
 			    data: {
 			      'csrfmiddlewaretoken': getCookie("csrftoken"),
@@ -162,7 +163,7 @@ $(function() {
 			    dataType: 'json',
 			    success: function (data) {
 				  if(id == film.currentFilm.id){
-					  $('#add-to-fav').show();
+					 $('#add-to-fav').show();
 	  				 $('#remove-from-fav').hide();
 				  }
 			      menu.favs = data.favorites;
@@ -201,6 +202,9 @@ $(function() {
 	let menu = {
 		favs: null,
 		addFav: function(currentFilm){
+			$('#add-to-fav').removeClass('loading');
+			$('#add-to-fav').hide();
+			$('#remove-from-fav').show();
 			let img = currentFilm.backdrop_path ? currentFilm.backdrop_path : currentFilm.poster_path
 			$('#favs-empty').removeClass('show');
 			$('.favorites').prepend(`
@@ -402,8 +406,6 @@ $(function() {
 	});
 	$('#add-to-fav').on('click', function(){
 		film.addToFav(film.currentFilm, film.currentType);
-		$(this).hide();
-		$('#remove-from-fav').show();
 	});
 	$('#remove-from-fav').on('click', function(){
 		film.removeFav(film.currentFilm.id, 'movie');
