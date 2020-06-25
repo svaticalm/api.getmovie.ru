@@ -168,6 +168,7 @@ body
     overflow: hidden
     -webkit-appearance: none
     width: fit-content
+    position: relative
     cursor: pointer
     transition: all .15s ease
     &:active
@@ -178,6 +179,8 @@ body
         .icon
             svg
                 transform: rotate(180deg)
+    .loader-wrap
+        background: linear-gradient(131.97deg, #4F37C5 35.87%, #662BE3 66.42%)
     .icon
         height: 60px
         width: 60px
@@ -204,6 +207,8 @@ body
         .text
             height: 45px
     &--green
+        .loader-wrap
+            background: linear-gradient(139.9deg, #4AD379 32.31%, #3DCA6D 67.92%)
         .text
             background: linear-gradient(139.9deg, #4AD379 32.31%, #3DCA6D 67.92%)
         &:hover
@@ -211,6 +216,10 @@ body
         &:active
             .text
                 background: linear-gradient(139.9deg, #44AF68 32.31%, #2FB55D 67.92%) !important
+    &.loading
+        pointer-events: none
+        .loader-wrap
+            opacity: 1
 .wrapper
     background-color: $bg-color
     width: 100%
@@ -251,6 +260,9 @@ body
             height: 180px
             cursor: pointer
             margin-top: 20px
+            &:hover
+                &:after
+                    background-color: rgba(#000, 0.35)
             a
                 display: block
                 position: absolute
@@ -312,6 +324,7 @@ body
                 height: 100%
                 top: 0
                 left: 0
+                transition: all .15s ease
             &__genre
                 color: #00CFFF
                 font-size: 10px
@@ -383,7 +396,7 @@ body
     .login-ok
         position: absolute
         width: 100%
-        height: 100%
+        height: 100vh
         top: 0
         left: 0
         background-color: #fff
@@ -393,6 +406,7 @@ body
         opacity: 0
         pointer-events: none
         transition: all .35s ease
+        z-index: 1000
         &.show
             opacity: 1
             pointer-events: all
@@ -726,3 +740,39 @@ body
                 font-weight: 900
                 line-height: 55px
                 color: #fff
+.loader
+  display: inline-block
+  position: relative
+  width: 50px
+  height: 50px
+  top: 5px
+  &-wrap
+      width: 100%
+      height: 60px
+      position: absolute
+      opacity: 0
+      transition: all .15s ease
+  div
+    position: absolute
+    border: 4px solid #fff
+    opacity: 1
+    border-radius: 50%
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite
+
+    &:nth-child(2)
+      animation-delay: -0.5s
+
+@keyframes lds-ripple
+  0%
+    top: 25px
+    left: 25px
+    width: 0
+    height: 0
+    opacity: 1
+
+  100%
+    top: 0px
+    left: 0px
+    width: 50px
+    height: 50px
+    opacity: 0

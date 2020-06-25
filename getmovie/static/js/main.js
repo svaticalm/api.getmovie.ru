@@ -52,6 +52,14 @@ $(function() {
 			film.voteAverage.html(data.vote_average * 10 + '%');
 			film.popularity.html(data.popularity);
 
+			if(data.is_favorite){
+				$('#add-to-fav').hide();
+				$('#remove-from-fav').show();
+			}else{
+				$('#add-to-fav').show();
+				$('#remove-from-fav').hide();
+			}
+
 			let runtime = Math.floor(data.runtime / 60) + 'h ' + data.runtime % 60 + 'm';
 			film.runtime.html(runtime);
 
@@ -153,6 +161,10 @@ $(function() {
 			    },
 			    dataType: 'json',
 			    success: function (data) {
+				  if(id == film.currentFilm.id){
+					  $('#add-to-fav').show();
+	  				 $('#remove-from-fav').hide();
+				  }
 			      menu.favs = data.favorites;
 				  menu.getFavourites();
 			    }
@@ -272,11 +284,13 @@ $(function() {
 						type: "POST",
 						url: '/signup',
 						beforeSend: function(){
+							$('#signup-btn').addClass('loading');
 						},
 						data: form_data,
 						dataType: 'json',
 						success: function (data) {
 							if(data.errors){
+								$('#signup-btn').removeClass('loading');
 								switch(data.errors[0].input){
 									case 'email':
 										$('#signup-form input[name="email"]').parent().find('.inp__error-text').html(data.errors[0].text);
@@ -297,7 +311,11 @@ $(function() {
 							  menu.favs = data.favorites;
 							  menu.getFavourites();
   						  }
+					  	},
+						error: function(){
+							$('#signup-btn').removeClass('loading');
 						}
+
 				  });
 			},
 			login: function(){
@@ -307,6 +325,7 @@ $(function() {
 						type: "POST",
 						url: '/login',
 						beforeSend: function(){
+							$('#login-btn').addClass('loading');
 						},
 						data: form_data,
 						dataType: 'json',
@@ -316,9 +335,13 @@ $(function() {
 							  menu.favs = data.favorites;
 							  menu.getFavourites();
 						  }else{
+							  $('#login-btn').removeClass('loading');
 							  $('#login-form input').parent().find('.inp__error-text').html('Неверный логин или пароль');
 							  $('#login-form input').parent().addClass('error');
 						  }
+					  	},
+					  	error: function(){
+							$('#login-btn').removeClass('loading');
 						}
 				  });
 			},
@@ -351,12 +374,12 @@ $(function() {
 	let preloader = {
 		start: function(){
 			menu.close();
-			$('#get-film, #header').animate({opacity: '0'}, 5);
+			$('#get-film, #header').animate({opacity: '0'}, 200);
 			$('#get-film, #header').addClass('scale07');
 		},
 		stop: function(){
 			menu.close();
-			$('#get-film, #header').animate({opacity: '1'}, 5);
+			$('#get-film, #header').animate({opacity: '1'}, 200);
 			$('#get-film, #header').removeClass('scale07');
 		}
 	}
