@@ -213,6 +213,16 @@ body
     &--mini
         .text
             height: 45px
+    &--red
+        .text
+            background: linear-gradient(139.9deg, #FF5775 32.31%, #FF537C 67.92%)
+        &:hover
+            box-shadow: 0px 0px 10px rgba(255, 87, 117, 0.7)
+        .loader-wrap
+            background: linear-gradient(139.9deg, #FF5775 32.31%, #FF537C 67.92%)
+        &:active
+            .text
+                background: linear-gradient(139.9deg, #DB526B 32.31%, #D33D61 67.92%)
     &--green
         .loader-wrap
             background: linear-gradient(139.9deg, #4AD379 32.31%, #3DCA6D 67.92%)
@@ -249,6 +259,35 @@ body
     overflow-y: auto
     left: 0
     top: 0
+    &__loader
+        position: absolute
+        width: 100%
+        height: 100vh
+        top: 0
+        left: 0
+        z-index: 1000
+        background-color: #fff
+        opacity: 0
+        pointer-events: none
+        transition: all .15s ease
+        &.show
+            opacity: 1
+            pointer-events: all
+        .loader
+            top: calc(50% - 25px) !important
+            left: calc(50% - 25px) !important
+            &-wrap
+              width: 100%
+              height: 100% !important
+              position: absolute
+              opacity: 1
+              transition: all .15s ease
+            div
+                position: absolute
+                border: 4px solid $violet
+                opacity: 1
+                border-radius: 50%
+                animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite
     .favorites
         padding-left: 35px
         padding-right: 35px
@@ -565,6 +604,11 @@ body
     display: none
     opacity: 0
     transition: all 0.5s ease
+    &__fav-buttons
+        .btn
+            .text
+                height: 50px !important
+                font-size: 14px !important
     .block-ttl
         color: #424367
         font-size: 14px
@@ -691,11 +735,12 @@ body
                 height: 50px
                 padding: 8px 13px
                 background-color: #282947
-                border-radius: 15px
+                border-radius: 8px
                 color: #7D73B8
                 margin-right: 16px
                 svg
                     margin-right: 10px
+                    height: 50px
                 .txt
                     .top
                         font-size: 18px

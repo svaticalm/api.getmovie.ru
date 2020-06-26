@@ -134,6 +134,7 @@ $(function() {
 			    url: '/add-fav',
 				beforeSend: function(){
 					$('#add-to-fav').addClass('loading');
+					$('.main-menu__loader').addClass('show');
 			    },
 			    data: {
 			      'csrfmiddlewaretoken': getCookie("csrftoken"),
@@ -143,10 +144,15 @@ $(function() {
 			    dataType: 'json',
 			    success: function (data) {
 			      menu.favs = data.favorites;
+				  $('.main-menu__loader').removeClass('show');
 				  if(data.fav_add){
 					  menu.addFav(currentFilm);
 				  }
-			    }
+			  },
+			  error: function(){
+				  $('.main-menu__loader').removeClass('show');
+				  $('#add-to-fav').removeClass('loading');
+			  }
 		  });
 		},
 		removeFav: function(id, type){
@@ -154,6 +160,7 @@ $(function() {
 			    type: "POST",
 			    url: '/remove-fav',
 				beforeSend: function(){
+					$('.main-menu__loader').addClass('show');
 			    },
 			    data: {
 			      'csrfmiddlewaretoken': getCookie("csrftoken"),
@@ -162,13 +169,17 @@ $(function() {
 			    },
 			    dataType: 'json',
 			    success: function (data) {
+					$('.main-menu__loader').removeClass('show');
 				  if(id == film.currentFilm.id){
 					 $('#add-to-fav').show();
 	  				 $('#remove-from-fav').hide();
 				  }
 			      menu.favs = data.favorites;
 				  menu.getFavourites();
-			    }
+			  },
+			  error: function(){
+				  $('.main-menu__loader').removeClass('show');
+			  }
 		  });
 		},
 
@@ -193,7 +204,10 @@ $(function() {
 				  }, 600);
 				  film.currentFilm = data;
 			      console.log(data);
-			    }
+			  },
+			  error: function(){
+				  preloader.stop();
+			  }
 		  });
 		},
 
