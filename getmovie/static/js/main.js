@@ -147,6 +147,10 @@ $(function() {
 				  $('.main-menu__loader').removeClass('show');
 				  if(data.fav_add){
 					  menu.addFav(currentFilm);
+				  }else{
+					  $('#add-to-fav').removeClass('loading');
+					  $('.main-menu__loader').removeClass('show');
+					  menu.open();
 				  }
 			  },
 			  error: function(){
@@ -280,19 +284,38 @@ $(function() {
 		auth: {
 			signupValidate: function(){
 			   let regEmail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-			   let address = $('#signup-form input[name="email"]').val();
+			   let address = $('#signup-form input[name="email"]').val().trim();
 			   if(regEmail.test(address) == false) {
-				   $('#signup-form input[name="email"]').parent().find('.inp__error-text').html('Введите корректный e-mail');
-				   $('#signup-form input[name="email"]').parent().addClass('error');
+				  menu.auth.addInpError($('#signup-form input[name="email"]'), 'Введите корректный e-mail');
 			      return false;
 			   }
 
 			   let regUsername = /^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
-			   let username = $('#signup-form input[name="username"]').val();
+			   let username = $('#signup-form input[name="username"]').val().trim();
 			   if(regUsername.test(username) == false) {
-				   $('#signup-form input[name="username"]').parent().find('.inp__error-text').html('Логин введён некорректно');
-				   $('#signup-form input[name="username"]').parent().addClass('error');
+				  menu.auth.addInpError($('#signup-form input[name="username"]'), 'Логин введён некорректно');
 			      return false;
+			   }
+
+			   let password = $('#signup-form input[name="password"]').val().trim();
+			   let passwordRepeat = $('#signup-form input[name="password-repeat"]').val().trim();
+			   if( password.length < 6){
+				   menu.auth.addInpError($('#signup-form input[name="password"]'), 'Пароль не должен содержать менее 6 символов');
+				   return false;
+			   }
+
+			   if(address == '' || username == '' || password == '' || passwordRepeat == ''){
+				   menu.auth.addInpError($('#signup-form input'), 'Заполните все поля');
+				    return false;
+			   }
+			  return true;
+			},
+			loginValidate: function(){
+			   let username = $('#login-form input[name="username"]').val().trim();
+			   let password = $('#login-form input[name="password"]').val().trim();
+			   if(username == '' || password == ''){
+				   menu.auth.addInpError($('#login-form input'), 'Заполните все поля');
+				    return false;
 			   }
 			  return true;
 			},
@@ -311,16 +334,14 @@ $(function() {
 								$('#signup-btn').removeClass('loading');
 								switch(data.errors[0].input){
 									case 'email':
-										$('#signup-form input[name="email"]').parent().find('.inp__error-text').html(data.errors[0].text);
-										$('#signup-form input[name="email"]').parent().addClass('error');
+										menu.auth.addInpError($('#signup-form input[name="email"]'), data.errors[0].text);
 										break;
 									case 'username':
-										$('#signup-form input[name="username"]').parent().find('.inp__error-text').html(data.errors[0].text);
-										$('#signup-form input[name="username"]').parent().addClass('error');
+										menu.auth.addInpError($('#signup-form input[name="username"]'), data.errors[0].text)
 										break;
 									case 'password':
-										$('#signup-form input[type="password"]').parent().find('.inp__error-text').html(data.errors[0].text);
-										$('#signup-form input[type="password"]').parent().addClass('error');
+										menu.auth.addInpError($('#signup-form input[name="password"]'), data.errors[0].text)
+										menu.auth.addInpError($('#signup-form input[name="password-repeat"]'), data.errors[0].text)
 										break;
 								}
 							}
@@ -385,7 +406,10 @@ $(function() {
 					$('#signup input[name="email"]').focus();
 				}, 500 );
 			},
-
+			addInpError: function(inp, text){
+				inp.parent().find('.inp__error-text').html(text);
+				inp.parent().addClass('error');
+			},
 		}
 	}
 
@@ -432,7 +456,9 @@ $(function() {
 		}
 	});
 	$('#login-btn').on('click', function(){
-		menu.auth.login();
+		if(menu.auth.loginValidate()){
+			menu.auth.login();	
+		}
 	});
 	$(document).on('click', '#remove-fav', function () {
 		let id = $(this).attr('data-id');
