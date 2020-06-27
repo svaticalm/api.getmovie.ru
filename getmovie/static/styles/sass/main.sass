@@ -250,7 +250,7 @@ body
     align-items: center
 .main-menu
     transform: translateX(-452px)
-    height: 100vh
+    height: 100%
     background-color: #fff
     transition: all .15s ease
     width: 450px
@@ -258,7 +258,33 @@ body
     position: fixed
     overflow-y: auto
     left: 0
+    padding-bottom: 30px
     top: 0
+    .notify
+        height: 45px
+        display: flex
+        align-items: center
+        background-color: #eee
+        padding-left: 15px
+        font-size: 12px
+        line-height: 15px
+        color: rgba($dark, 0.65)
+        width: 370px
+        margin: 0 auto
+        margin-top: 25px
+        border-radius: 8px
+        svg
+            width: 16px
+            height: 16px
+            fill: rgba($dark, 0.30)
+            margin-right: 8px
+        a
+            color: rgba($violet, 0.70)
+            margin-right: 4px
+            text-decoration: none
+            transition: all .15s ease
+            &:hover
+                color: rgba($violet, 1)
     &__loader
         position: absolute
         width: 100%
@@ -423,7 +449,7 @@ body
                 font-size: 18px
                 color: #fff
                 background-color: #4F95FF
-            .notify
+            .notify-status
                 position: absolute
                 width: 13px
                 height: 13px
@@ -551,8 +577,19 @@ body
             font-size: 36px
             line-height: 42px
             margin-top: -7px
-            cursor: pointer
+            position: relative
+            .beta
+                position: absolute
+                border-radius: 4px
+                right: -47px
+                bottom: 7px
+                padding: 3px
+                font-size: 10px
+                line-height: 12px
+                color: $red
+                border: 1px solid $red
             a
+                cursor: pointer
                 text-decoration: none
                 color: #fff !important
         &__left

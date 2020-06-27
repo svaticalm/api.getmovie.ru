@@ -8,7 +8,7 @@ from django.http import QueryDict
 from json import dumps
 from .models import Fav, UserFav
 from urllib.parse import parse_qs
-
+from discord_webhook import DiscordWebhook, DiscordEmbed
 
 def index(request, id=-1):
     if request.method == 'POST':
@@ -79,6 +79,14 @@ def signup(request):
         login(request, user)
         result = get_list_favorite(username)
         result.update({'login': True, 'signup': True})
+
+        webhook = DiscordWebhook(url='https://discordapp.com/api/webhooks/726552664934187049/Ywj3iwcGtVPvNnuuCzfJY9xW0IhGt7y_oKUXXkWClR5bwShifYjjQrKXuUSA9z23cBRf')
+        embed = DiscordEmbed(title='+1 Пользователь - ' + username, description='Email: ' + email, color=242424)
+        # add embed object to webhook
+        webhook.add_embed(embed)
+
+        webhook_response = webhook.execute()
+
         return HttpResponse(dumps(result))
 
     return HttpResponseRedirect('/')
