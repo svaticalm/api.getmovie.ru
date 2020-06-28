@@ -52,6 +52,8 @@ $(function() {
 			film.voteAverage.html(data.vote_average * 10 + '%');
 			film.popularity.html(data.popularity);
 
+			$('title').text(data.title);
+			
 			if(data.is_favorite){
 				$('#add-to-fav').hide();
 				$('#remove-from-fav').show();
