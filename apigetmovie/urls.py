@@ -28,3 +28,6 @@ urlpatterns += [
 urlpatterns += [
     path("remove-fav", views.remove_fav)
 ]
+urlpatterns += [
+    path('feedback', views.feedback),
+]

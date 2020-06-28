@@ -9,6 +9,7 @@ from json import dumps
 from .models import Fav, UserFav
 from urllib.parse import parse_qs
 from discord_webhook import DiscordWebhook, DiscordEmbed
+from django.core.mail import send_mail
 
 def index(request, id=-1):
     if request.method == 'POST':
@@ -207,3 +208,20 @@ def get_list_favorite(username):
         i +=1
     result = {"favorites": result, "username": username}
     return result
+
+
+def feedback(request):
+    if request.method == 'POST':
+        response_ajax = request.read().decode("UTF-8")
+        text = QueryDict(response_ajax).get('text')
+        name = QueryDict(response_ajax).get('name')
+        send_mail(name, text, 'mittle.group@mittle.jetmovie.ru', ['mittle.studio@gmail.com'], fail_silently=False)
+        webhook = DiscordWebhook(url='https://discordapp.com/api/webhooks/726552664934187049/Ywj3iwcGtVPvNnuuCzfJY9xW0IhGt7y_oKUXXkWClR5bwShifYjjQrKXuUSA9z23cBRf')
+
+        embed = DiscordEmbed(title='Новое сообщение от ' + name, description='Текст: ' + text, color=242424)
+
+        webhook.add_embed(embed)
+
+        webhook_response = webhook.execute()
+        return HttpResponse(dumps({'send': True,}))
+    return HttpResponseRedirect('/')
