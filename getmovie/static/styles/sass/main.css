@@ -291,8 +291,9 @@ body {
   position: fixed;
   overflow-y: auto;
   left: 0;
-  padding-bottom: 30px;
   top: 0; }
+  .main-menu.noscroll {
+    overflow-y: hidden; }
   .main-menu .notify {
     height: 45px;
     display: flex;
@@ -354,7 +355,8 @@ body {
     overflow-y: auto;
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap; }
+    flex-wrap: wrap;
+    padding-bottom: 30px; }
     .main-menu .favorites .fav-item {
       border-radius: 25px;
       overflow: hidden;

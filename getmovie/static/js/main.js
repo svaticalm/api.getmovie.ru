@@ -135,6 +135,7 @@ $(function() {
 				beforeSend: function(){
 					$('#add-to-fav').addClass('loading');
 					$('.main-menu__loader').addClass('show');
+					$('.main-menu').addClass('noscroll');
 			    },
 			    data: {
 			      'csrfmiddlewaretoken': getCookie("csrftoken"),
@@ -145,17 +146,20 @@ $(function() {
 			    success: function (data) {
 			      menu.favs = data.favorites;
 				  $('.main-menu__loader').removeClass('show');
+				  $('.main-menu').removeClass('noscroll');
 				  if(data.fav_add){
 					  menu.addFav(currentFilm);
 				  }else{
 					  $('#add-to-fav').removeClass('loading');
 					  $('.main-menu__loader').removeClass('show');
+					  $('.main-menu').removeClass('noscroll');
 					  menu.open();
 				  }
 			  },
 			  error: function(){
 				  $('.main-menu__loader').removeClass('show');
 				  $('#add-to-fav').removeClass('loading');
+				  $('.main-menu').removeClass('noscroll');
 			  }
 		  });
 		},
@@ -165,6 +169,7 @@ $(function() {
 			    url: '/remove-fav',
 				beforeSend: function(){
 					$('.main-menu__loader').addClass('show');
+					$('.main-menu').addClass('noscroll');
 			    },
 			    data: {
 			      'csrfmiddlewaretoken': getCookie("csrftoken"),
@@ -174,6 +179,7 @@ $(function() {
 			    dataType: 'json',
 			    success: function (data) {
 					$('.main-menu__loader').removeClass('show');
+					$('.main-menu').removeClass('noscroll');
 				  if(id == film.currentFilm.id){
 					 $('#add-to-fav').show();
 	  				 $('#remove-from-fav').hide();
@@ -183,6 +189,7 @@ $(function() {
 			  },
 			  error: function(){
 				  $('.main-menu__loader').removeClass('show');
+				  $('.main-menu').removeClass('noscroll');
 			  }
 		  });
 		},
@@ -271,6 +278,7 @@ $(function() {
 		},
 		showUser: function(name){
 			$('.login-ok').addClass('show');
+			$('.main-menu').addClass('noscroll');
 			$('.user-img').html(name.split('')[0]);
 			setTimeout(() => {
 				$('#auth').hide();
@@ -278,6 +286,7 @@ $(function() {
 			}, 350);
 			setTimeout(() => {
 				$('.login-ok').removeClass('show');
+				$('.main-menu').removeClass('noscroll');
 			}, 500);
 		},
 
@@ -457,7 +466,7 @@ $(function() {
 	});
 	$('#login-btn').on('click', function(){
 		if(menu.auth.loginValidate()){
-			menu.auth.login();	
+			menu.auth.login();
 		}
 	});
 	$(document).on('click', '#remove-fav', function () {
