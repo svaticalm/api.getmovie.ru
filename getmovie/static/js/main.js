@@ -226,6 +226,31 @@ $(function() {
 
 	let menu = {
 		favs: null,
+
+		sendFeedback: function(){
+			let form_data = $('#feedback-form').serialize();
+			$.ajax({
+				type: "POST",
+				url: '/feedback',
+				beforeSend: function(){
+					$('#send-feedback').addClass('loading');
+				},
+				data: form_data,
+				dataType: 'json',
+				success: function (data) {
+					$('#send-feedback').removeClass('loading');
+					$('.login-ok').addClass('show');
+					$('#feedback').removeClass('show');
+					setTimeout(function(){
+						$('.login-ok').removeClass('show');
+					}, 300);
+				},
+				error: function(){
+					$('#send-feedback').removeClass('loading');
+				}
+
+		  });
+		},
 		addFav: function(currentFilm){
 			$('#add-to-fav').removeClass('loading');
 			$('#add-to-fav').hide();
@@ -479,6 +504,25 @@ $(function() {
 	$('#show-signup').on('click', function(){
 		menu.auth.showSignup();
 	});
+
+	$('#show-feedback').on('click', function(){
+		$('#feedback').addClass('show');
+		$('.main-menu').addClass('noscroll');
+	});
+
+	$('#send-feedback').on('click', function(){
+		if($('#feedback-form input[name="name"]').val().trim() != '' && $('#feedback-form textarea[name="text"]').val().trim() != ''){
+			menu.sendFeedback();
+		}else{
+			menu.auth.addInpError($('#feedback-form input[name="name"]'), 'Заполните все поля');
+		}
+	});
+
+	$('#hide-feedback').on('click', function(){
+		$('#feedback').removeClass('show');
+		$('.main-menu').removeClass('noscroll');
+	});
+
 	// Работа кнопок END
 	$('input').on('focus', function(){
 		$(this).parent().removeClass('error');

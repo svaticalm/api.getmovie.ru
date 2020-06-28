@@ -54,7 +54,7 @@
                 <svg>
                     <use xlink:href="{% static 'img/sprite.svg' %}#info"></use>
                 </svg>
-                <a href="mailto:svaticalm@gmail.com">Сообщите нам </a>о багах и своих пожеланиях
+                <a href="javascript:void(0);" id="show-feedback">Сообщите нам </a>о проблеме или своих пожеланиях
             </div>
             <div class="ttl">Избранное</div>
             <div class="nothing" id="favs-empty">
@@ -75,6 +75,34 @@
                 </div>
             </div>
 
+        </div>
+        <div class="feedback" id="feedback">
+            <form id="feedback-form" method="POST">
+                {% csrf_token %}
+                <div class="inp">
+                    <input type="text" name="name" placeholder="Ваше имя">
+                    <div class="inp__error-text"></div>
+                </div>
+                <div class="textarea-field mt16">
+                    <textarea name="text" placeholder="Сообщение"></textarea>
+                    <div class="inp__error-text"></div>
+                </div>
+            </form>
+            <div class="mt32 submit-button" id="send-feedback">
+                <button class="btn">
+                    <div class="text">Отправить
+                        <div class="loader-wrap">
+                            <div class="loader">
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <div class="mt16 bottom-text">
+                    <a href="javascript:void(0);" id="hide-feedback">Назад</a>
+                </div>
+            </div>
         </div>
         <div id="auth" class="auth">
             <div class="auth-form --signup" id="signup">
