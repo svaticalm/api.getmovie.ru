@@ -870,7 +870,14 @@ body {
           fill: #ffc107; }
     .generated-film__info--img {
       width: 350px;
-      margin-right: 40px; }
+      margin-right: 40px;
+      position: relative; }
+      .generated-film__info--img .yandex-ad {
+        position: absolute;
+        top: calc(100% + 24px);
+        width: 350px;
+        background-color: #fff;
+        height: auto; }
       .generated-film__info--img img {
         width: 100%;
         height: auto;

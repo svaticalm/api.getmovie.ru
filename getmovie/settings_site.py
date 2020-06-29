@@ -25,7 +25,7 @@ SECRET_KEY = 'h-5j7y@$q^le2%24(r+fvit!o4e1ujp83%#%j@8(fd()ht^^#7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['jetmovie.ru', 'www.jetmovie.ru']
 
 CSRF_COOKIE_SECURE = False
 # Application definition
@@ -77,8 +77,11 @@ WSGI_APPLICATION = 'getmovie.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'u1088151_default',
+        'USER': 'u1088151_default',
+        'PASSWORD': '_4PqxQN2',
+        'HOST': 'localhost',
     }
 }
 
