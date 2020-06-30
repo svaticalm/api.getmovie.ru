@@ -876,8 +876,9 @@ body {
         position: absolute;
         top: calc(100% + 24px);
         width: 350px;
-        background-color: #fff;
-        height: auto; }
+        height: 100%; }
+        .generated-film__info--img .yandex-ad #yandex_rtb_R-A-595674-1 {
+          height: 100%; }
       .generated-film__info--img img {
         width: 100%;
         height: auto;
