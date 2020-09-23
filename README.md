@@ -1,1 +1,4 @@
-# api.getmovie.ru
+# jetmovie
+Генератор рандомных фильмов
+
+!(Смотреть здесь|jetmovie.ru)
